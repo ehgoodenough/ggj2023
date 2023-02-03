@@ -13,3 +13,73 @@
     color: @white;
     font-family: @fonts;
 }
+
+.CookbookSpace {
+    top: 0em;
+    left: 0em;
+    width: 15em;
+    bottom: 0em;
+    position: absolute;
+    padding: 1em;
+    background-color: #444;
+    div {
+        margin-bottom: 1em / @golden-ratio;
+    }
+}
+
+.CookingSpace {
+    top: 0em;
+    left: 15em;
+    right: 0em;
+    bottom: 0em;
+    padding: 1em;
+    position: fixed;
+
+    .Stove {
+        top: 5em;
+        left: 10em;
+        width: 10em;
+        height: 10em;
+        position: absolute;
+        text-align: center;
+
+        background-color: black;
+    }
+
+    .Sink {
+        top: 5em;
+        left: 21em;
+        width: 5em;
+        height: 5em;
+        position: absolute;
+
+        text-align: center;
+        background-color: #AAA;
+    }
+
+    .CuttingBoard {
+        top: 20em;
+        left: 10em;
+        width: 10em;
+        height: 5em;
+        position: absolute;
+
+        border-radius: 1em;
+        text-align: center;
+        background-color: #784c2c;
+    }
+
+    .Pot {
+        left: 10em;
+        top: 10em;
+        width: 5em;
+        height: 5em;
+        position: absolute;
+        margin-left: -2.5em;
+        margin-right: -2.5em;
+
+        text-align: center;
+        border-radius: 100%;
+        background-color: gray;
+    }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "fitd-esque",
+  "name": "ggj2023",
   "version": "0.0.0",
   "description": "...",
   "private": true,
@@ -8,7 +8,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ehgoodenough"
+    "url": "https://github.com/ehgoodenough/ggj2023"
   },
   "scripts": {
     "build": "codeglue --stage=production",
