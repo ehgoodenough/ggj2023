@@ -6,7 +6,9 @@ export default class Mount {
     render() {
         return (
             <div className="Mount">
-                <MainScreen/>
+                <div className="Frame">
+                    <MainScreen/>
+                </div>
             </div>
         )
     }

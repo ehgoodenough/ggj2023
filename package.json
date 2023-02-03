@@ -16,6 +16,7 @@
     "zip": "bestzip build.zip builds/web/*"
   },
   "dependencies": {
+    "frem": "^1.0.0",
     "keyb": "^1.4.1",
     "poin": "^2.2.0",
     "preact": "^10.11.3",
