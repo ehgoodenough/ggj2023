@@ -8,7 +8,46 @@
     position: absolute;
 }
 
-.MainScreen {
+.Frame {
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 16em * 3;
+    height: 9em * 3;
+    font-size: 1em / 3;
+    margin: auto;
+    position: fixed;
+    overflow: hidden;
+
+    background-color: green;
+}
+
+.TitleScreen {
+    top: 0em;
+    left: 0em;
+    right: 0em;
+    bottom: 0em;
+    position: absolute;
+    background-color: orange;
+}
+
+.LevelSelectScreen {
+    top: 0em;
+    left: 0em;
+    right: 0em;
+    bottom: 0em;
+    position: absolute;
+    background-color: blue;
+
+    .SelectableLevel {
+        &:hover {
+            color: red;
+        }
+    }
+}
+
+.GameScreen {
     padding: 1em;
     color: @white;
     font-family: @fonts;
@@ -46,44 +85,43 @@
     }
 
     .Stove {
-        &.atEase {
-            top: 5em;
-            left: 10em;
-        }
         width: 10em;
         height: 10em;
 
         background-color: black;
+
+        &.Default {
+            top: 5em;
+            left: 10em;
+        }
     }
 
     .Sink {
-        &.atEase {
-            top: 5em;
-            left: 21em;
-        }
         width: 5em;
         height: 5em;
 
         background-color: #AAA;
+
+        &.Default {
+            top: 5em;
+            left: 21em;
+        }
     }
 
     .CuttingBoard {
-        &.atEase {
-            top: 20em;
-            left: 10em;
-        }
         width: 10em;
         height: 5em;
 
         border-radius: 1em;
         background-color: #784c2c;
+
+        &.Default {
+            top: 20em;
+            left: 10em;
+        }
     }
 
     .Pot {
-        &.atEase {
-            left: 10em;
-            top: 10em;
-        }
         width: 5em;
         height: 5em;
         position: absolute;
@@ -92,6 +130,11 @@
 
         border-radius: 100%;
         background-color: gray;
+
+        &.Default {
+            left: 10em;
+            top: 10em;
+        }
     }
 
     .Onions {
@@ -117,19 +160,4 @@
 
         color: brown;
     }
-}
-
-.Frame {
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    width: 16em * 3;
-    height: 9em * 3;
-    font-size: 1em / 3;
-    margin: auto;
-    position: fixed;
-    overflow: hidden;
-
-    background-color: green;
 }

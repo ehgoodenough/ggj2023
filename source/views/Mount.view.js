@@ -7,19 +7,55 @@ export default class Mount {
         return (
             <div className="Mount">
                 <div className="Frame">
-                    <MainScreen/>
+                    {this.screen}
                 </div>
             </div>
         )
     }
+    get screen() {
+        if(game.screen == "TitleScreen") {
+            return <TitleScreen/>
+        }
+        if(game.screen == "LevelSelectScreen") {
+            return <LevelSelectScreen/>
+        }
+        return <GameScreen/>
+    }
 }
 
-class MainScreen {
+class TitleScreen {
     render() {
         return (
-            <div class="MainScreen" onClick={this.onClick}>
+            <div class="TitleScreen" onClick={this.onClick}>
+                TITLE SCREEN - click anywhere to continue
+            </div>
+        )
+    }
+    onClick() {
+        game.screen = "LevelSelectScreen"
+    }
+}
+
+class LevelSelectScreen {
+    render() {
+        return (
+            <div class="LevelSelectScreen">
+                <div>LEVEL SELECT SCREEN - click on your level</div>
+                <div class="SelectableLevel" onClick={this.onClick}>Level 2 - Soup???</div>
+            </div>
+        )
+    }
+    onClick() {
+        game.screen = "GameScreen"
+    }
+}
+
+class GameScreen {
+    render() {
+        return (
+            <div class="GameScreen" onClick={this.onClick} onContextMenu={this.onContextMenu}>
                 <div class="CookbookSpace">
-                    <div>SOUP????</div>
+                    <div>Level 2 - SOUP????</div>
                     <div>Step 1: Add water to pot.</div>
                     <div>Step 2: Put pot on stove. Boil.</div>
                     <div>Step 3: Cut onions, carrots and garlic. Put in pot.</div>
@@ -49,6 +85,12 @@ class MainScreen {
             game.selectedItem = undefined
         }
     }
+    get onContextMenu() {
+        return (event) => {
+            event.preventDefault()
+            game.selectedItem = undefined
+        }
+    }
 }
 
 class Item {
@@ -72,7 +114,7 @@ class Item {
         }
     }
     get class() {
-        return ["Item", this.props.item, "atEase"].join(" ")
+        return ["Item", this.props.item, game.items[this.props.item]?.state || "Default"].join(" ")
     }
 }
 
@@ -94,6 +136,8 @@ class SelectedItem {
 }
 
 const game = {
+    "screen": "GameScreen",
+    // "screen": "TitleScreen",
     "selectedItem": undefined,
     "items": {
         "CuttingBoard": {
