@@ -53,7 +53,8 @@ class LevelSelectScreen {
 class GameScreen {
     render() {
         return (
-            <div class="GameScreen" onClick={this.onClick} onContextMenu={this.onContextMenu}>
+            <div class="GameScreen" onClick={this.onClick} onContextMenu={this.onContextMenu}
+                hasSelectedItem={game.selectedItem != undefined}>
                 <div class="CookbookSpace">
                     <div>Level 2 - SOUP????</div>
                     <div>Step 1: Add water to pot.</div>
@@ -96,7 +97,7 @@ class GameScreen {
 class Item {
     render() {
         return (
-            <div class={this.class} onClick={this.onClick}
+            <div class={this.class} onClick={this.onClick} isSelectable={this.props.unselectable != true}
                 style={{"display": game.selectedItem != this.props.item ? "block" : "none"}}>
                 {this.props.item}
             </div>

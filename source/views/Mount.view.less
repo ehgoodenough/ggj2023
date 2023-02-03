@@ -51,6 +51,15 @@
     padding: 1em;
     color: @white;
     font-family: @fonts;
+
+    * {
+        cursor: grab;
+    }
+    &[hasSelectedItem] {
+        * {
+            cursor: grabbing !important;
+        }
+    }
 }
 
 .CookbookSpace {
@@ -82,6 +91,10 @@
     .Item {
         position: absolute;
         text-align: center;
+
+        &[isSelectable] {
+            cursor: pointer;
+        }
     }
 
     .Stove {
