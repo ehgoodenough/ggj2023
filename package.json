@@ -1,0 +1,31 @@
+{
+  "name": "fitd-esque",
+  "version": "0.0.0",
+  "description": "...",
+  "private": true,
+  "contributors": [
+    "Andrew McPherson <@ehgoodenough>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ehgoodenough"
+  },
+  "scripts": {
+    "build": "codeglue --stage=production",
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider && codeglue --stage=development --mode=server",
+    "zip": "bestzip build.zip builds/web/*"
+  },
+  "dependencies": {
+    "keyb": "^1.4.1",
+    "preact": "^10.11.3",
+    "shortid": "^2.2.16",
+    "statgrab": "^1.2.2",
+    "yaafloop": "^1.2.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "bestzip": "^2.2.1",
+    "codeglue": "^1.9.4"
+  }
+}
