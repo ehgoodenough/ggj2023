@@ -35,51 +35,86 @@
     padding: 1em;
     position: fixed;
 
-    .Stove {
-        top: 5em;
-        left: 10em;
-        width: 10em;
-        height: 10em;
+    .SelectedItem {
+        position: fixed !important;
+        pointer-events: none !important;
+    }
+
+    .Item {
         position: absolute;
         text-align: center;
+    }
+
+    .Stove {
+        &.atEase {
+            top: 5em;
+            left: 10em;
+        }
+        width: 10em;
+        height: 10em;
 
         background-color: black;
     }
 
     .Sink {
-        top: 5em;
-        left: 21em;
+        &.atEase {
+            top: 5em;
+            left: 21em;
+        }
         width: 5em;
         height: 5em;
-        position: absolute;
 
-        text-align: center;
         background-color: #AAA;
     }
 
     .CuttingBoard {
-        top: 20em;
-        left: 10em;
+        &.atEase {
+            top: 20em;
+            left: 10em;
+        }
         width: 10em;
         height: 5em;
-        position: absolute;
 
         border-radius: 1em;
-        text-align: center;
         background-color: #784c2c;
     }
 
     .Pot {
-        left: 10em;
-        top: 10em;
+        &.atEase {
+            left: 10em;
+            top: 10em;
+        }
         width: 5em;
         height: 5em;
         position: absolute;
+        margin-top: -2.5em;
         margin-left: -2.5em;
-        margin-right: -2.5em;
 
-        text-align: center;
         border-radius: 100%;
         background-color: gray;
+    }
+
+    .Onions {
+        top: 1em;
+    }
+
+    .Carrots {
+        top: 3em;
+
+        color: orange;
+    }
+
+    .Garlic {
+        top: 5em;
+    }
+
+    .Salt {
+        top: 7em;
+    }
+
+    .Beef {
+        top: 9em;
+
+        color: brown;
     }
 }
