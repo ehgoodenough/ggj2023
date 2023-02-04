@@ -66,15 +66,17 @@ class GameScreen {
                     <p>Add salt and pepper.</p>
                 </div>
                 <div class="CookingSpace">
-                    <Item item="CuttingBoard" isSelectable={false}/>
-                    <Item item="Stove" isSelectable={false}/>
-                    <Item item="Pot" isSelectable={false}/>
+                    <Item item="CuttingBoard"/>
+                    <Item item="Stove"/>
+                    <Item item="Pot"/>
                     <Item item="Salt"/>
+                    <Item item="Oil"/>
                     <Item item="Egg"/>
                     <Item item="Onion"/>
                     <Item item="GreenPepper"/>
                     <Item item="Tomato"/>
                     <Item item="Knife"/>
+                    <Item item="Spoon"/>
                     <SelectedItem/>
                 </div>
             </div>
@@ -107,20 +109,40 @@ class Item {
                 cuts={game.items[this.props.item]?.cuts || 0}
                 position={game.items[this.props.item]?.position || "Default"}
                 isSelected={game.selectedItem == this.props.item}
-                isSelectable={this.props.isSelectable !== false}
+                isSelectable={this.isSelectable}
+                isPaused={this.isPaused}
                 onClick={this.onClick}/>
         )
     }
+    get isSelectable() {
+        if(game.items[this.props.item].isSelectable === false) {
+            return false
+        } else {
+            return true
+        }
+    }
+    get isPaused() {
+        if(game.selectedItem != undefined
+        && this.props.item != "Pot"
+        && this.props.item != "CuttingBoard") {
+            return true
+        }
+    }
     get onClick() {
         return (event) => {
-            event.stopPropagation()
             const clickedItem = this.props.item
+            // if(game.items[clickedItem].position == "Pot"
+            // || game.items[clickedItem].position == "CuttingBoard") {
+            //     return
+            // }
+            event.stopPropagation()
+
+
             if(game.selectedItem == "Knife"
             && clickedItem == "CuttingBoard") {
                 Object.values(game.items).forEach((item) => {
                     if(item.position == "CuttingBoard"
                     && item.canBeCut == true) {
-                        console.log(item)
                         item.cuts = item.cuts || 0
                         item.cuts += 1
                         if(item.cuts > item.maxcuts) {
@@ -130,6 +152,19 @@ class Item {
                 })
                 return
             }
+            if(game.selectedItem == "Spoon"
+            && clickedItem == "Pot") {
+                return
+            }
+            if(clickedItem == "Pot"
+            && game.selectedItem != undefined
+            && game.items[game.selectedItem]?.canBePotted == true) {
+                game.items[game.selectedItem].position = "Pot"
+                game.selectedItem = undefined
+                return
+            }
+
+
             if(clickedItem == "CuttingBoard"
             && game.selectedItem != undefined
             && game.items[game.selectedItem]?.canBeCut == true) {
@@ -143,7 +178,7 @@ class Item {
                 return
             }
 
-            if(this.props.isSelectable === false) return
+            if(game.items[this.props.item].isSelectable === false) return
             game.selectedItem = this.props.item
         }
     }
@@ -189,15 +224,17 @@ const game = {
     // "screen": "TitleScreen",
     "selectedItem": undefined,
     "items": {
-        "Onion": {"canBeCut": true, "maxcuts": 2},
-        "GreenPepper": {"canBeCut": true, "maxcuts": 2},
-        "Tomato": {"canBeCut": true, "maxcuts": 2},
-        "Egg": {},
-        "Salt": {},
-        "Stove": {},
-        "Sink": {},
-        "Pot": {},
+        "Onion": {"canBeCut": true, "maxcuts": 2, "canBePotted": true},
+        "GreenPepper": {"canBeCut": true, "maxcuts": 2, "canBePotted": true},
+        "Tomato": {"canBeCut": true, "maxcuts": 2, "canBePotted": true},
+        "Egg": {"canBePotted": true},
+        "Salt": {"canBePotted": true},
+        "Oil": {"canBePotted": true},
+        "Stove": {"isSelectable": false},
+        "Sink": {"isSelectable": false},
+        "Pot": {"isSelectable": false},
+        "CuttingBoard": {"isSelectable": false},
         "Knife": {},
-        "CuttingBoard": {},
+        "Spoon": {},
     }
 }
