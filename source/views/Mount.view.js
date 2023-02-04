@@ -58,26 +58,22 @@ class GameScreen {
             <div class="GameScreen" onClick={this.onClick} onContextMenu={this.onContextMenu}
                 hasSelectedItem={game.selectedItem != undefined}>
                 <div class="CookbookSpace">
-                    <p>Level 2 - شوربة عدس</p>
-                    <p>Add water to pot.</p>
-                    <p>Put pot on stove. Boil.</p>
-                    <p>Cut onions, carrots and garlic. Put in pot.</p>
-                    <p>Stir.</p>
-                    <p>Cut beef into tiny(?) cubes. Put in the pot.</p>
-                    <p>Stir.</p>
-                    <p>Add salt, to taste.</p>
-                    <p>Eat!!</p>
+                    <p>Level 1 - شوربة عدس</p>
+                    <p>Cut the tomatoes, green peppers, and onion.</p>
+                    <p>Put oil in the pan.</p>
+                    <p>Put the tomato, green peppers, and onion in the pan. Stir.</p>
+                    <p>Crack an egg in the pan.</p>
+                    <p>Add salt and pepper.</p>
                 </div>
                 <div class="CookingSpace">
                     <Item item="CuttingBoard" isSelectable={false}/>
-                    <Item item="Sink" isSelectable={false}/>
                     <Item item="Stove" isSelectable={false}/>
-                    <Item item="Pot"/>
+                    <Item item="Pot" isSelectable={false}/>
                     <Item item="Salt"/>
-                    <Item item="Beef"/>
-                    <Item item="Onions"/>
-                    <Item item="Carrots"/>
-                    <Item item="Garlic"/>
+                    <Item item="Egg"/>
+                    <Item item="Onion"/>
+                    <Item item="GreenPepper"/>
+                    <Item item="Tomato"/>
                     <Item item="Knife"/>
                     <SelectedItem/>
                 </div>
@@ -193,15 +189,15 @@ const game = {
     // "screen": "TitleScreen",
     "selectedItem": undefined,
     "items": {
-        "Onions": {"canBeCut": true, "maxcuts": 3},
-        "Carrots": {"canBeCut": true, "maxcuts": 3},
-        "Garlic": {"canBeCut": true, "maxcuts": 3},
-        "Beef": {"canBeCut": true, "maxcuts": 5},
+        "Onion": {"canBeCut": true, "maxcuts": 2},
+        "GreenPepper": {"canBeCut": true, "maxcuts": 2},
+        "Tomato": {"canBeCut": true, "maxcuts": 2},
+        "Egg": {},
         "Salt": {},
         "Stove": {},
         "Sink": {},
         "Pot": {},
-        "CuttingBoard": {},
         "Knife": {},
+        "CuttingBoard": {},
     }
 }

@@ -67,10 +67,10 @@
     }
 
     .CookbookSpace {
-        top: 1.87em;
-        left: 39.13em;
-        width: 46.47em - 39.13em;;
-        height: 15.67em - 1.87em;
+        left: 38.51em; top: 0.73em;
+        width: 45.13em - 37.77em;
+        height: 10.75em - 0.03em;
+
         padding: 0.33em;
         position: absolute;
         text-align: right;
@@ -112,7 +112,7 @@
             background-color: black;
 
             &[position=Default] {
-                left: 28.00em; top: 16.00em;
+                left: 28.26em; top: 16.82em;
             }
         }
 
@@ -136,7 +136,7 @@
             background-color: #784c2c;
 
             &[position=Default] {
-                left: 14.38em; top: 12.87em;
+                left: 14.39em; top: 13.75em;
             }
         }
 
@@ -151,11 +151,11 @@
             background-color: gray;
 
             &[position=Default] {
-                left: 28.00em; top: 16.00em;
+                left: 28.26em; top: 16.82em;
             }
         }
 
-        #Onions {
+        #Onion {
             width: 4em;
             height: 1em;
             color: white;
@@ -165,19 +165,16 @@
 
             &[cuts="0"] {
                 &:after {
-                    content: "Onions";
+                    content: "Onion";
                 }
             }
             &[cuts="1"] {
                 &:after {
-                    content: "Oni ons";
+                    content: "On ion";
                 }
             }
             &[cuts="2"]:after {
-                content: "O ni ons";
-            }
-            &[cuts="3"]:after {
-                content: "O ni on s";
+                content: "On i on";
             }
 
             &[position=Default] {
@@ -190,32 +187,27 @@
             }
         }
 
-        #Carrots {
+        #GreenPepper {
             width: 4em;
             height: 1em;
-            color: white;
+            color: green;
             background-color: black;
             margin-left: 4em / -2;
             margin-top: 1em / -2;
 
             &[cuts="0"] {
                 &:after {
-                    content: "Carrots";
+                    content: "Pepper";
                 }
             }
             &[cuts="1"] {
                 &:after {
-                    content: "Ca rrots";
+                    content: "Pe pper";
                 }
             }
             &[cuts="2"] {
                 &:after {
-                    content: "Ca rr ots";
-                }
-            }
-            &[cuts="3"] {
-                &:after {
-                    content: "Ca rr ot s";
+                    content: "Pe pp er";
                 }
             }
 
@@ -226,20 +218,30 @@
             &[position=CuttingBoard] {
                 left: 18.69em; top: 16.16em;
             }
-
-            color: orange;
         }
 
-        #Garlic {
+        #Tomato {
             width: 4em;
             height: 1em;
-            color: white;
+            color: red;
             background-color: black;
             margin-left: 4em / -2;
             margin-top: 1em / -2;
 
-            &::after {
-                content: "Garlic";
+            &[cuts="0"] {
+                &:after {
+                    content: "Tomato";
+                }
+            }
+            &[cuts="1"] {
+                &:after {
+                    content: "To mato";
+                }
+            }
+            &[cuts="2"] {
+                &:after {
+                    content: "To ma to";
+                }
             }
 
             &[position=Default] {
@@ -251,7 +253,7 @@
             }
         }
 
-        #Beef {
+        #Egg {
             width: 4em;
             height: 1em;
             color: white;
@@ -259,9 +261,9 @@
             margin-left: 4em / -2;
             margin-top: 1em / -2;
 
-            color: brown;
+            color: yellow;
             &::after {
-                content: "Beef";
+                content: "Egg";
             }
 
             &[position=Default] {
