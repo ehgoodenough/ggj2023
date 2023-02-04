@@ -48,7 +48,6 @@
 }
 
 .GameScreen {
-    padding: 1em;
     color: @white;
     font-family: @fonts;
 
@@ -64,6 +63,28 @@
     &[hasSelectedItem] {
         * {
             cursor: grabbing !important;
+        }
+    }
+
+    .YouWinModal  {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+
+        z-index: 100;
+        pointer-events: none;
+        background-color: fadeout(orange, 50%);
+
+        opacity: 0;
+        &[hasWon] {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .ContinueButton {
+            &:hover {
+                color: red;
+            }
         }
     }
 
@@ -89,16 +110,13 @@
             position: absolute;
             text-align: center;
 
-            &[isGone] {
+            &[isGone],
+            &[isSelected] {
                 display: none;
             }
 
             &[isSelectable] {
                 cursor: grab;
-            }
-
-            &[isSelected] {
-                display: none;
             }
 
             &[isPaused] {
@@ -111,32 +129,6 @@
             pointer-events: none !important;
         }
 
-        #Stove {
-            width: 6em;
-            height: 6em;
-            margin-top: 6em / -2;
-            margin-left: 6em / -2;
-            border-radius: 100%;
-
-            background-color: black;
-
-            &[position=Default] {
-                left: 28.26em; top: 16.82em;
-            }
-        }
-
-        #Sink {
-            width: 5em;
-            height: 5em;
-
-            background-color: #AAA;
-
-            &[position=Default] {
-                top: 5em;
-                left: 21em;
-            }
-        }
-
         #CuttingBoard {
             width: 9em;
             height: 7em;
@@ -144,33 +136,31 @@
             border-radius: 1em;
             background-color: #784c2c;
 
-            &[position=Default] {
-                left: 14.39em; top: 13.75em;
-            }
+            z-index: 10;
+            left: 15.39em; top: 14.75em;
         }
 
         #Pot {
-            width: 5em;
-            height: 5em;
-            position: absolute;
-            margin-top: -2.5em;
-            margin-left: -2.5em;
+            width: 7em;
+            height: 7em;
+            margin-top: 7em / -2;
+            margin-left: 7em / -2;
 
             border-radius: 100%;
             background-color: gray;
 
-            &[position=Default] {
-                left: 28.26em; top: 16.82em;
-            }
+            z-index: 10;
+            left: 29.26em; top: 17.82em;
         }
 
         #Onion {
             width: 4em;
             height: 1em;
+            margin-top: 1em / -2;
+            margin-left: 4em / -2;
+
             color: white;
             background-color: black;
-            margin-left: 4em / -2;
-            margin-top: 1em / -2;
 
             &[cuts="0"] {
                 &:after {
@@ -186,6 +176,7 @@
                 content: "On i on";
             }
 
+            z-index: 20;
             &[position=Default] {
                 top: 13.13em;
                 left: 4.93em;
@@ -201,10 +192,11 @@
         #GreenPepper {
             width: 4em;
             height: 1em;
+            margin-top: 1em / -2;
+            margin-left: 4em / -2;
+
             color: green;
             background-color: black;
-            margin-left: 4em / -2;
-            margin-top: 1em / -2;
 
             &[cuts="0"] {
                 &:after {
@@ -221,6 +213,8 @@
                     content: "Pe pp er";
                 }
             }
+
+            z-index: 20;
 
             &[position=Default] {
                 top: 17.87em;
@@ -258,6 +252,8 @@
                 }
             }
 
+            z-index: 20;
+
             &[position=Default] {
                 top: 22.33em;
                 left: 4.73em;
@@ -273,16 +269,17 @@
         #Egg {
             width: 4em;
             height: 1em;
-            color: white;
-            background-color: black;
-            margin-left: 4em / -2;
             margin-top: 1em / -2;
+            margin-left: 4em / -2;
 
             color: yellow;
+            background-color: black;
+
             &::after {
                 content: "Egg";
             }
 
+            z-index: 20;
             &[position=Default] {
                 left: 10.13em; top: 17.80em;
             }
@@ -297,17 +294,20 @@
         #Oil {
             width: 4em;
             height: 1em;
+            margin-top: 1em / -2;
+            margin-left: 4em / -2;
+
             color: white;
             background-color: black;
-            margin-left: 4em / -2;
-            margin-top: 1em / -2;
 
             &::after {
                 content: "Oil";
             }
 
+            z-index: 20;
+
             &[position=Default] {
-                left: 42.13em; top: 13.63em;
+                left: 10.13em; top: 12.97em;
             }
             &[position=Pot] {
                 left: 28.26em; top: 16.82em;
@@ -329,18 +329,20 @@
         #Salt {
             width: 4em;
             height: 1em;
+            margin-top: 1em / -2;
+            margin-left: 4em / -2;
+
             color: white;
             background-color: black;
-            margin-left: 4em / -2;
-            margin-top: 1em / -2;
 
             &::after {
                 content: "Salt";
             }
 
+            z-index: 20;
+
             &[position=Default] {
-                top: 22em;
-                left: 42.67em;
+                left: 10.33em; top: 22.83em;
             }
             &[position=Pot] {
                 left: 28.26em; top: 16.82em;
@@ -359,27 +361,26 @@
                 content: "Spoon";
             }
 
-            &[position=Default] {
-                left: 38.53em; top: 18.63em;
-            }
+            z-index: 25;
+            left: 38.53em; top: 18.63em;
         }
 
         #Knife {
             width: 4em;
             height: 1em;
+            margin-top: 1em / -2;
+            margin-left: 4em / -2;
+
             color: white;
             background-color: black;
-            margin-left: 4em / -2;
-            margin-top: 1em / -2;
 
             &::after {
                 content: "Knife";
             }
 
-            &[position=Default] {
-                top: 18.53em;
-                left: 35.07em;
-            }
+            z-index: 25;
+            top: 18.53em;
+            left: 35.07em;
         }
     }
 }
