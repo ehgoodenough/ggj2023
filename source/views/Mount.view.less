@@ -51,6 +51,7 @@
     color: @white;
     font-family: @fonts;
 
+    background-color: #AAA;
     background-image: url("../images/blocking.png");
     background-size: cover;
     width: 100%;
@@ -141,16 +142,38 @@
         }
 
         #Pot {
-            width: 7em;
-            height: 7em;
-            margin-top: 7em / -2;
-            margin-left: 7em / -2;
+            width: 10em;
+            height: 10em;
+            margin-top: 10em / -2;
+            margin-left: 10em / -2;
 
-            border-radius: 100%;
-            background-color: gray;
+            background-size: contain;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-image: url("../images/tasa.png");
 
             z-index: 10;
-            left: 29.26em; top: 17.82em;
+            left: 39.60em; top: 21.10em;
+
+            &[position=Stove] {
+                left: 30em; top: 11.50em;
+            }
+        }
+
+        #Stove {
+            width: 8em;
+            height: 13em;
+            margin-left: 8em / -2;
+            margin-top: 13em / -2;
+
+            background-size: contain;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-image: url("../images/stove.png");
+
+            z-index: 5;
+
+            left: 29.26em; top: 15.6em;
         }
 
         #Onion {
@@ -185,7 +208,7 @@
                 left: 18.69em; top: 16.16em;
             }
             &[position=Pot] {
-                left: 29.20em; top: 18.03em;
+                left: 28.60em; top: 13.63em;
             }
         }
 
@@ -224,17 +247,21 @@
                 left: 18.69em; top: 16.16em;
             }
             &[position=Pot] {
-                left: 26.87em; top: 17.97em;
+                left: 28.60em; top: 13.63em;
             }
         }
 
         #Tomato {
-            width: 4em;
-            height: 1em;
+            width: 3em * 2;
+            height: 2.33em * 2;
+            margin-left: 3em / -2 * 2;
+            margin-top: 2.33em / -2 * 2;
+
             color: red;
-            background-color: black;
-            margin-left: 4em / -2;
-            margin-top: 1em / -2;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url("../images/tomatoe.png");
 
             &[cuts="0"] {
                 &:after {
@@ -262,7 +289,7 @@
                 left: 18.69em; top: 16.16em;
             }
             &[position=Pot] {
-                left: 27.01em; top: 15.62em;
+                left: 28.60em; top: 13.63em;
             }
         }
 
@@ -287,7 +314,7 @@
                 left: 18.69em; top: 16.16em;
             }
             &[position=Pot] {
-                left: 28.26em; top: 16.82em;
+                left: 28.60em; top: 13.63em;
             }
         }
 
@@ -304,13 +331,12 @@
                 content: "Oil";
             }
 
-            z-index: 20;
-
+            z-index: 17;
             &[position=Default] {
                 left: 10.13em; top: 12.97em;
             }
             &[position=Pot] {
-                left: 28.26em; top: 16.82em;
+                left: 28.60em; top: 13.63em;
             }
 
             &[status=StirFry] {
@@ -323,6 +349,75 @@
                 &::after {
                     content: "Shakshoka";
                 }
+            }
+        }
+
+        #Molokheya {
+            width: 4em;
+            height: 1em;
+            margin-top: 1em / -2;
+            margin-left: 4em / -2;
+
+            color: white;
+            background-color: black;
+
+            &[cuts="0"] {
+                &:after {
+                    content: "Molokheya";
+                }
+            }
+            &[cuts="1"] {
+                &:after {
+                    content: "Molo kheya";
+                }
+            }
+            &[cuts="2"] {
+                &:after {
+                    content: "Mo lo khe ya";
+                }
+            }
+            &[cuts="3"] {
+                &:after {
+                    content: "Mo lo khe ya";
+                }
+            }
+
+            z-index: 20;
+
+            &[position=Default] {
+                left: 4.20em; top: 17.57em;
+            }
+            &[position=CuttingBoard] {
+                left: 19.53em; top: 17.77em;
+            }
+            &[position=Pot] {
+                left: 28.60em; top: 13.63em;
+            }
+        }
+
+        #Takleya {
+            width: 4em;
+            height: 1em;
+            margin-top: 1em / -2;
+            margin-left: 4em / -2;
+
+            color: white;
+            background-color: black;
+
+            &::after {
+                content: "Takleya";
+            }
+
+            z-index: 20;
+
+            &[position=Default] {
+                left: 4.33em; top: 12.50em;
+            }
+            &[position=CuttingBoard] {
+                left: 19.53em; top: 17.77em;
+            }
+            &[position=Pot] {
+                left: 28.60em; top: 13.63em;
             }
         }
 
@@ -345,7 +440,30 @@
                 left: 10.33em; top: 22.83em;
             }
             &[position=Pot] {
-                left: 28.26em; top: 16.82em;
+                left: 28.60em; top: 13.63em;
+            }
+        }
+
+        #ChickenStock {
+            width: 4em;
+            height: 1em;
+            margin-top: 1em / -2;
+            margin-left: 4em / -2;
+
+            color: white;
+            background-color: black;
+
+            &::after {
+                content: "Stock";
+            }
+
+            z-index: 20;
+
+            &[position=Default] {
+                left: 10.07em; top: 17.63em;
+            }
+            &[position=Pot] {
+                left: 28.60em; top: 13.63em;
             }
         }
 

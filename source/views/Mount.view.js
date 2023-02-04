@@ -46,14 +46,17 @@ class LevelSelectScreen {
         return (
             <div class="LevelSelectScreen">
                 <div>LEVEL SELECT SCREEN - click on your level</div>
-                <div class="SelectableLevel" onClick={this.onClick}>Level 1 - شكشوكة</div>
-                <div class="SelectableLevel" onClick={this.onClick}>Level 2 - شوربة عدس</div>
-                <div class="SelectableLevel" onClick={this.onClick}>Level 3 - يالنجي ورق عنب</div>
+                <div class="SelectableLevel" onClick={this.onClick(1)}>Level 1 - Shakshoka</div>
+                <div class="SelectableLevel" onClick={this.onClick(2)}>Level 2 - Molokheya</div>
+                <div class="SelectableLevel" onClick={this.onClick(3)}>Level 3 - Takleya</div>
             </div>
         )
     }
-    onClick() {
-        game.screen = "GameScreen"
+    onClick(level) {
+        return (event) => {
+            game.screen = "GameScreen"
+            game.level = Deepclone(Levels[level])
+        }
     }
 }
 
@@ -61,10 +64,10 @@ class GameScreen {
     render() {
         if(game.level == undefined) return
         return (
-            <div class="GameScreen" onClick={this.onClick} onContextMenu={this.onContextMenu}
+            <div class="GameScreen" onMouseDown={this.onMouseDown} onContextMenu={this.onContextMenu}
                 hasSelectedItem={game.level.selectedItem != undefined}>
                 <div class="CookbookSpace">
-                    {game.level.instructions}
+                    {game.level.instructions.map((instruction) => <p>{instruction}</p>)}
                 </div>
                 <div class="CookingSpace">
                     {Object.keys(game.level.items).map((itemId) => <Item item={itemId}/>)}
@@ -79,7 +82,7 @@ class GameScreen {
             </div>
         )
     }
-    get onClick() {
+    get onMouseDown() {
         return (event) => {
             if(game.level.selectedItem != undefined) {
                 game.level.items[game.level.selectedItem].position = undefined
@@ -129,7 +132,8 @@ class Item {
                 isSelected={game.level.selectedItem == this.props.item}
                 isSelectable={this.isSelectable}
                 isPaused={this.isPaused}
-                onClick={this.onClick}/>
+                onMouseDown={this.onMouseDown}
+                onMouseUp={this.onMouseUp}/>
         )
     }
     get isSelectable() {
@@ -141,17 +145,23 @@ class Item {
     }
     get isPaused() {
         if(game.level.selectedItem != undefined
-        && this.props.item != "Pot"
-        && this.props.item != "CuttingBoard") {
+        && game.level.items[this.props.item]?.isLocation != true) {
             return true
         }
     }
-    get onClick() {
+    get onMouseDown() {
         return (event) => {
             event.stopPropagation()
             game.level.interact(this.props.item)
         }
     }
+    // get onMouseUp() {
+    //     return (event) => {
+    //         event.stopPropagation()
+    //         // if(this.props.item != this.props.selectedItem))
+    //         game.level.interact(this.props.item)
+    //     }
+    // }
 }
 
 ////////////
@@ -176,107 +186,214 @@ window.addEventListener("keydown", function(event) {
 // LEVELS //
 ///////////
 
-const Level1 = {
-    "items": {
-        // Ingredients
-        "Onion": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
-        "GreenPepper": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
-        "Tomato": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
-        "Oil": {"canBePotted": true},
-        "Egg": {},
-        "Salt": {},
-        // Tools
-        "Knife": {},
-        "Spoon": {},
-        // Appliances
-        "Pot": {"isSelectable": false},
-        "CuttingBoard": {"isSelectable": false},
-    },
-    "instructions": [
-        <p>Level 1 - شوربة عدس</p>,
-        <p>Chop the tomatoes, green peppers, onion.</p>,
-        <p>Put oil in the pan.</p>,
-        <p>Put the chop vegetables in the pan.</p>,
-        <p>Stir until mixed.</p>,
-        <p>Crack an egg over the pan.</p>,
-        <p>Add salt and pepper.</p>
-    ],
-    "interact": function(clickedItem) {
-        if(game.level.selectedItem == "Knife"
-        && clickedItem == "CuttingBoard") {
-            Object.values(game.level.items).forEach((item) => {
-                if(item.position == "CuttingBoard"
-                && item.canBeCut == true) {
-                    item.cuts = item.cuts || 0
-                    item.cuts += 1
-                    if(item.cuts >= item.maxcuts) {
-                        item.cuts = item.maxcuts
-                        item.canBePotted = true
+const Levels = {
+    "1": {
+        "name": "Shakshoka",
+        "items": {
+            // Ingredients
+            "Onion": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
+            "GreenPepper": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
+            "Tomato": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
+            "Oil": {"canBePotted": true},
+            "Egg": {},
+            "Salt": {},
+            // Tools
+            "Knife": {},
+            "Spoon": {},
+            "Stove": {"isLocation": true, "isSelectable": false},
+            "Pot": {"isLocation": true},
+            "CuttingBoard": {"isLocation": true, "isSelectable": false},
+        },
+        "instructions": [
+            "Level 1 - شوربة عدس",
+            "Chop the tomatoes, green peppers, onion.",
+            "Put oil in the pan.",
+            "Put the chop vegetables in the pan.",
+            "Stir until mixed.",
+            "Crack an egg over the pan.",
+            "Add salt and pepper."
+        ],
+        "interact": function(clickedItem) {
+            console.log(game.level.selectedItem, "onto", clickedItem)
+            if(clickedItem == "Stove"
+            && game.level.selectedItem == "Pot") {
+                game.level.items["Pot"].position = "Stove"
+                game.level.items["Pot"].isSelectable = false
+                game.level.selectedItem = undefined
+                return
+            }
+            if(game.level.selectedItem == "Knife"
+            && clickedItem == "CuttingBoard") {
+                Object.values(game.level.items).forEach((item) => {
+                    if(item.position == "CuttingBoard"
+                    && item.canBeCut == true) {
+                        item.cuts = item.cuts || 0
+                        item.cuts += 1
+                        if(item.cuts >= item.maxcuts) {
+                            item.cuts = item.maxcuts
+                            item.canBePotted = true
+                        }
                     }
-                }
-            })
-            return
-        }
-        if(clickedItem == "CuttingBoard"
-        && game.level.selectedItem != undefined
-        && game.level.items[game.level.selectedItem]?.canBeCut == true) {
-            Object.values(game.level.items).forEach((item) => {
-                if(item.position == "CuttingBoard") {
-                    item.position = undefined
-                }
-            })
-            game.level.items[game.level.selectedItem].position = "CuttingBoard"
-            game.level.selectedItem = undefined
-            return
-        }
-        if(game.level.selectedItem == "Spoon"
-        && clickedItem == "Pot") {
-            if(game.level.items["Onion"].position == "Pot"
-            && game.level.items["Tomato"].position == "Pot"
-            && game.level.items["GreenPepper"].position == "Pot"
-            && game.level.items["Oil"].position == "Pot") {
-                game.level.items["Onion"].isGone = true
-                game.level.items["Tomato"].isGone = true
-                game.level.items["GreenPepper"].isGone = true
-                game.level.items["Oil"].status = "StirFry"
-                game.level.items["Egg"].canBePotted = true
+                })
+                return
             }
-            return
-        }
-        if(game.level.selectedItem == "Egg") {
-            if(game.level.items["Oil"].status == "StirFry") {
-                game.level.items["Oil"].status = "Shakshoka"
-                game.level.items["Egg"].isGone = true
+            if(clickedItem == "CuttingBoard"
+            && game.level.selectedItem != undefined
+            && game.level.items[game.level.selectedItem]?.canBeCut == true) {
+                Object.values(game.level.items).forEach((item) => {
+                    if(item.position == "CuttingBoard") {
+                        item.position = undefined
+                    }
+                })
+                game.level.items[game.level.selectedItem].position = "CuttingBoard"
                 game.level.selectedItem = undefined
-                console.log("!!!")
+                return
             }
-            return
-        }
-        if(game.level.selectedItem == "Salt") {
-            if(game.level.items["Oil"].status == "Shakshoka") {
-                game.level.items["Salt"].isGone = true
+            if(game.level.selectedItem == "Spoon"
+            && clickedItem == "Pot") {
+                if(game.level.items["Onion"].position == "Pot"
+                && game.level.items["Tomato"].position == "Pot"
+                && game.level.items["GreenPepper"].position == "Pot"
+                && game.level.items["Oil"].position == "Pot") {
+                    game.level.items["Onion"].isGone = true
+                    game.level.items["Tomato"].isGone = true
+                    game.level.items["GreenPepper"].isGone = true
+                    game.level.items["Oil"].status = "StirFry"
+                    game.level.items["Egg"].canBePotted = true
+                }
+                return
+            }
+            if(game.level.selectedItem == "Egg") {
+                if(game.level.items["Oil"].status == "StirFry") {
+                    game.level.items["Oil"].status = "Shakshoka"
+                    game.level.items["Egg"].isGone = true
+                    game.level.selectedItem = undefined
+                }
+                return
+            }
+            if(game.level.selectedItem == "Salt") {
+                if(game.level.items["Oil"].status == "Shakshoka") {
+                    game.level.items["Salt"].isGone = true
+                    game.level.selectedItem = undefined
+                    game.level.hasWon = true
+                }
+                return
+            }
+            if(clickedItem == "Pot"
+            && game.level.items["Pot"].position == "Stove"
+            && game.level.selectedItem != undefined
+            && (game.level.selectedItem == "Oil" || game.level.items["Oil"].position == "Pot")
+            && game.level.items[game.level.selectedItem]?.canBePotted == true) {
+                game.level.items[game.level.selectedItem].position = "Pot"
+                game.level.items[game.level.selectedItem].isSelectable = false
                 game.level.selectedItem = undefined
-                game.level.hasWon = true
+                return
             }
-            return
-        }
-        if(clickedItem == "Pot"
-        && game.level.selectedItem != undefined
-        && (game.level.selectedItem == "Oil" || game.level.items["Oil"].position == "Pot")
-        && game.level.items[game.level.selectedItem]?.canBePotted == true) {
-            game.level.items[game.level.selectedItem].position = "Pot"
-            game.level.items[game.level.selectedItem].isSelectable = false
-            game.level.selectedItem = undefined
-            return
-        }
 
-        if(game.level.items[clickedItem].isSelectable === false) return
-        game.level.selectedItem = clickedItem
+            if(game.level.items[clickedItem].isSelectable === false) return
+            game.level.selectedItem = clickedItem
+        }
+    },
+    "2": {
+        "name": "Molokheya",
+        "instructions": [
+            "1. Put the chicken stock in the pot.",
+            "2. Cut the molokheya.",
+            "3. Add the molokheya to the pot.",
+            "4. Add the takleya to the pot.",
+            "5. Stir.",
+            "6. Add salt and pepper to the pot.",
+        ],
+        "items": {
+            // Ingredients
+            "ChickenStock": {},
+            "Molokheya": {},
+            "Takleya": {},
+            "Salt": {},
+            // Tools
+            "Knife": {},
+            "Spoon": {},
+            "Pot": {"isLocation": true},
+            "CuttingBoard": {"isLocation": true},
+        },
+        "interact": function(clickedItem) {
+            if(game.level.selectedItem == "Knife"
+            && clickedItem == "CuttingBoard") {
+                Object.values(game.level.items).forEach((item) => {
+                    if(item.position == "CuttingBoard"
+                    && item.canBeCut == true) {
+                        item.cuts = item.cuts || 0
+                        item.cuts += 1
+                        if(item.cuts >= item.maxcuts) {
+                            item.cuts = item.maxcuts
+                            item.canBePotted = true
+                        }
+                    }
+                })
+                return
+            }
+            // if(clickedItem == "CuttingBoard"
+            // && game.level.selectedItem != undefined
+            // && game.level.items[game.level.selectedItem]?.canBeCut == true) {
+            //     Object.values(game.level.items).forEach((item) => {
+            //         if(item.position == "CuttingBoard") {
+            //             item.position = undefined
+            //         }
+            //     })
+            //     game.level.items[game.level.selectedItem].position = "CuttingBoard"
+            //     game.level.selectedItem = undefined
+            //     return
+            // }
+            // if(game.level.selectedItem == "Spoon"
+            // && clickedItem == "Pot") {
+            //     if(game.level.items["Onion"].position == "Pot"
+            //     && game.level.items["Tomato"].position == "Pot"
+            //     && game.level.items["GreenPepper"].position == "Pot"
+            //     && game.level.items["Oil"].position == "Pot") {
+            //         game.level.items["Onion"].isGone = true
+            //         game.level.items["Tomato"].isGone = true
+            //         game.level.items["GreenPepper"].isGone = true
+            //         game.level.items["Oil"].status = "StirFry"
+            //         game.level.items["Egg"].canBePotted = true
+            //     }
+            //     return
+            // }
+            // if(game.level.selectedItem == "Salt") {
+            //     if(game.level.items["Oil"].status == "Shakshoka") {
+            //         game.level.items["Salt"].isGone = true
+            //         game.level.selectedItem = undefined
+            //         game.level.hasWon = true
+            //     }
+            //     return
+            // }
+
+            // ADD CHICKEN STOCK TO POT
+            // if(clickedItem == "Pot"
+            // && game.level.items["ChickenStock"].position == "Pot"
+            // && game.level.selectedItem == "Molokheya"
+            // && game.level.items["Molokheya"].cuts == 3) {
+            //     ADD TO POT
+            // }
+
+            // && game.level.items[game.level.selectedItem]?.canBePotted == true) {
+            //     game.level.items[game.level.selectedItem].position = "Pot"
+            //     game.level.items[game.level.selectedItem].isSelectable = false
+            //     game.level.selectedItem = undefined
+            //     return
+            // }
+
+            if(clickedItem == "CuttingBoard"
+            || clickedItem == "Knife") {
+                return
+            }
+
+            game.level.selectedItem = clickedItem
+        }
     }
 }
 
 window.game = {
     "screen": "GameScreen",
     // "screen": "TitleScreen",
-    "level": Deepclone(Level1)
+    "level": Deepclone(Levels[1])
 }
