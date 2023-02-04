@@ -41,7 +41,9 @@ class LevelSelectScreen {
         return (
             <div class="LevelSelectScreen">
                 <div>LEVEL SELECT SCREEN - click on your level</div>
-                <div class="SelectableLevel" onClick={this.onClick}>Level 2 - Soup???</div>
+                <div class="SelectableLevel" onClick={this.onClick}>Level 1 - شكشوكة</div>
+                <div class="SelectableLevel" onClick={this.onClick}>Level 2 - شوربة عدس</div>
+                <div class="SelectableLevel" onClick={this.onClick}>Level 3 - يالنجي ورق عنب</div>
             </div>
         )
     }
@@ -56,7 +58,7 @@ class GameScreen {
             <div class="GameScreen" onClick={this.onClick} onContextMenu={this.onContextMenu}
                 hasSelectedItem={game.selectedItem != undefined}>
                 <div class="CookbookSpace">
-                    <div>Level 2 - SOUP????</div>
+                    <div>Level 2 - شوربة عدس</div>
                     <div>Step 1: Add water to pot.</div>
                     <div>Step 2: Put pot on stove. Boil.</div>
                     <div>Step 3: Cut onions, carrots and garlic. Put in pot.</div>
