@@ -56,12 +56,13 @@ class GameScreen {
     render() {
         return (
             <div class="GameScreen" onClick={this.onClick} onContextMenu={this.onContextMenu}
-                hasSelectedItem={game.selectedItem != undefined}>
+                hasSelectedItem={game.level.selectedItem != undefined}>
                 <div class="CookbookSpace">
                     <p>Level 1 - شوربة عدس</p>
-                    <p>Cut the tomatoes, green peppers, and onion.</p>
+                    <p>Chop the tomatoes, green peppers, onion.</p>
                     <p>Put oil in the pan.</p>
-                    <p>Put the tomato, green peppers, and onion in the pan. Stir.</p>
+                    <p>Put the chop vegetables in the pan.</p>
+                    <p>Stir until mixed.</p>
                     <p>Crack an egg in the pan.</p>
                     <p>Add salt and pepper.</p>
                 </div>
@@ -84,18 +85,18 @@ class GameScreen {
     }
     get onClick() {
         return (event) => {
-            if(game.selectedItem != undefined) {
-                game.items[game.selectedItem].position = undefined
-                game.selectedItem = undefined
+            if(game.level.selectedItem != undefined) {
+                game.level.items[game.level.selectedItem].position = undefined
+                game.level.selectedItem = undefined
             }
         }
     }
     get onContextMenu() {
         return (event) => {
             event.preventDefault()
-            if(game.selectedItem != undefined) {
-                game.items[game.selectedItem].position = undefined
-                game.selectedItem = undefined
+            if(game.level.selectedItem != undefined) {
+                game.level.items[game.level.selectedItem].position = undefined
+                game.level.selectedItem = undefined
             }
         }
     }
@@ -106,23 +107,25 @@ class Item {
         return (
             <div class="Item"
                 id={this.props.item}
-                cuts={game.items[this.props.item]?.cuts || 0}
-                position={game.items[this.props.item]?.position || "Default"}
-                isSelected={game.selectedItem == this.props.item}
+                status={game.level.items[this.props.item]?.status}
+                cuts={game.level.items[this.props.item]?.cuts || 0}
+                position={game.level.items[this.props.item]?.position || "Default"}
+                isGone={game.level.items[this.props.item]?.isGone}
+                isSelected={game.level.selectedItem == this.props.item}
                 isSelectable={this.isSelectable}
                 isPaused={this.isPaused}
                 onClick={this.onClick}/>
         )
     }
     get isSelectable() {
-        if(game.items[this.props.item].isSelectable === false) {
+        if(game.level.items[this.props.item].isSelectable === false) {
             return false
         } else {
             return true
         }
     }
     get isPaused() {
-        if(game.selectedItem != undefined
+        if(game.level.selectedItem != undefined
         && this.props.item != "Pot"
         && this.props.item != "CuttingBoard") {
             return true
@@ -131,66 +134,93 @@ class Item {
     get onClick() {
         return (event) => {
             const clickedItem = this.props.item
-            // if(game.items[clickedItem].position == "Pot"
-            // || game.items[clickedItem].position == "CuttingBoard") {
+            // if(game.level.items[clickedItem].position == "Pot"
+            // || game.level.items[clickedItem].position == "CuttingBoard") {
             //     return
             // }
             event.stopPropagation()
 
-
-            if(game.selectedItem == "Knife"
+            if(game.level.selectedItem == "Knife"
             && clickedItem == "CuttingBoard") {
-                Object.values(game.items).forEach((item) => {
+                Object.values(game.level.items).forEach((item) => {
                     if(item.position == "CuttingBoard"
                     && item.canBeCut == true) {
                         item.cuts = item.cuts || 0
                         item.cuts += 1
-                        if(item.cuts > item.maxcuts) {
+                        if(item.cuts >= item.maxcuts) {
                             item.cuts = item.maxcuts
+                            item.canBePotted = true
                         }
                     }
                 })
                 return
             }
-            if(game.selectedItem == "Spoon"
-            && clickedItem == "Pot") {
-                return
-            }
-            if(clickedItem == "Pot"
-            && game.selectedItem != undefined
-            && game.items[game.selectedItem]?.canBePotted == true) {
-                game.items[game.selectedItem].position = "Pot"
-                game.selectedItem = undefined
-                return
-            }
-
-
             if(clickedItem == "CuttingBoard"
-            && game.selectedItem != undefined
-            && game.items[game.selectedItem]?.canBeCut == true) {
-                Object.values(game.items).forEach((item) => {
+            && game.level.selectedItem != undefined
+            && game.level.items[game.level.selectedItem]?.canBeCut == true) {
+                Object.values(game.level.items).forEach((item) => {
                     if(item.position == "CuttingBoard") {
                         item.position = undefined
                     }
                 })
-                game.items[game.selectedItem].position = "CuttingBoard"
-                game.selectedItem = undefined
+                game.level.items[game.level.selectedItem].position = "CuttingBoard"
+                game.level.selectedItem = undefined
+                return
+            }
+            if(game.level.selectedItem == "Spoon"
+            && clickedItem == "Pot") {
+                if(game.level.items["Onion"].position == "Pot"
+                && game.level.items["Tomato"].position == "Pot"
+                && game.level.items["GreenPepper"].position == "Pot"
+                && game.level.items["Oil"].position == "Pot") {
+                    game.level.items["Onion"].isGone = true
+                    game.level.items["Tomato"].isGone = true
+                    game.level.items["GreenPepper"].isGone = true
+                    game.level.items["Oil"].status = "StirFry"
+                    game.level.items["Egg"].canBePotted = true
+                }
+                return
+            }
+            if(game.level.selectedItem == "Egg") {
+                if(game.level.items["Oil"].status == "StirFry") {
+                    game.level.items["Oil"].status = "Shakshoka"
+                    game.level.items["Egg"].isGone = true
+                    game.level.selectedItem = undefined
+                    console.log("!!!")
+                }
+                return
+            }
+            if(game.level.selectedItem == "Salt") {
+                if(game.level.items["Oil"].status == "Shakshoka") {
+                    game.level.items["Salt"].isGone = true
+                    game.level.selectedItem = undefined
+                    game.level.win = true
+                }
+                return
+            }
+            if(clickedItem == "Pot"
+            && game.level.selectedItem != undefined
+            && (game.level.selectedItem == "Oil" || game.level.items["Oil"].position == "Pot")
+            && game.level.items[game.level.selectedItem]?.canBePotted == true) {
+                game.level.items[game.level.selectedItem].position = "Pot"
+                game.level.items[game.level.selectedItem].isSelectable = false
+                game.level.selectedItem = undefined
                 return
             }
 
-            if(game.items[this.props.item].isSelectable === false) return
-            game.selectedItem = this.props.item
+            if(game.level.items[this.props.item].isSelectable === false) return
+            game.level.selectedItem = this.props.item
         }
     }
 }
 
 class SelectedItem {
     render() {
-        if(game.selectedItem == undefined) return
+        if(game.level.selectedItem == undefined) return
         return (
             <div class={"Selected Item"}
-                id={game.selectedItem}
-                cuts={game.items[game.selectedItem]?.cuts || 0}
+                id={game.level.selectedItem}
+                cuts={game.level.items[game.level.selectedItem]?.cuts || 0}
                 style={this.style}>
             </div>
         )
@@ -219,22 +249,26 @@ window.addEventListener("keydown", function(event) {
     console.log(style)
 })
 
-const game = {
-    "screen": "GameScreen",
-    // "screen": "TitleScreen",
+const Level1 = {
     "selectedItem": undefined,
     "items": {
-        "Onion": {"canBeCut": true, "maxcuts": 2, "canBePotted": true},
-        "GreenPepper": {"canBeCut": true, "maxcuts": 2, "canBePotted": true},
-        "Tomato": {"canBeCut": true, "maxcuts": 2, "canBePotted": true},
-        "Egg": {"canBePotted": true},
-        "Salt": {"canBePotted": true},
+        "Onion": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
+        "GreenPepper": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
+        "Tomato": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
         "Oil": {"canBePotted": true},
+        "Egg": {},
+        "Salt": {},
+        "Knife": {},
+        "Spoon": {},
         "Stove": {"isSelectable": false},
         "Sink": {"isSelectable": false},
         "Pot": {"isSelectable": false},
         "CuttingBoard": {"isSelectable": false},
-        "Knife": {},
-        "Spoon": {},
     }
+}
+
+window.game = {
+    "screen": "GameScreen",
+    // "screen": "TitleScreen",
+    "level": Level1
 }

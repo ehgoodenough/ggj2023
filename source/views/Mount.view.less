@@ -89,6 +89,10 @@
             position: absolute;
             text-align: center;
 
+            &[isGone] {
+                display: none;
+            }
+
             &[isSelectable] {
                 cursor: grab;
             }
@@ -186,13 +190,11 @@
                 top: 13.13em;
                 left: 4.93em;
             }
-
             &[position=CuttingBoard] {
                 left: 18.69em; top: 16.16em;
             }
-
             &[position=Pot] {
-                left: 28.26em; top: 16.82em;
+                left: 29.20em; top: 18.03em;
             }
         }
 
@@ -228,7 +230,7 @@
                 left: 18.69em; top: 16.16em;
             }
             &[position=Pot] {
-                left: 28.26em; top: 16.82em;
+                left: 26.87em; top: 17.97em;
             }
         }
 
@@ -264,7 +266,7 @@
                 left: 18.69em; top: 16.16em;
             }
             &[position=Pot] {
-                left: 28.26em; top: 16.82em;
+                left: 27.01em; top: 15.62em;
             }
         }
 
@@ -309,6 +311,18 @@
             }
             &[position=Pot] {
                 left: 28.26em; top: 16.82em;
+            }
+
+            &[status=StirFry] {
+                &::after {
+                    content: "Stir Fry";
+                }
+            }
+
+            &[status=Shakshoka] {
+                &::after {
+                    content: "Shakshoka";
+                }
             }
         }
 
