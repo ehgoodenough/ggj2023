@@ -6,7 +6,7 @@ export default class Mount {
     render() {
         return (
             <div className="Mount">
-                <div className="Frame">
+                <div className="Frame" id="frame">
                     {this.screen}
                 </div>
             </div>
@@ -58,15 +58,15 @@ class GameScreen {
             <div class="GameScreen" onClick={this.onClick} onContextMenu={this.onContextMenu}
                 hasSelectedItem={game.selectedItem != undefined}>
                 <div class="CookbookSpace">
-                    <div>Level 2 - شوربة عدس</div>
-                    <div>Step 1: Add water to pot.</div>
-                    <div>Step 2: Put pot on stove. Boil.</div>
-                    <div>Step 3: Cut onions, carrots and garlic. Put in pot.</div>
-                    <div>Step 4: Stir.</div>
-                    <div>Step 5: Cut beef into tiny(?) cubes. Put in the pot.</div>
-                    <div>Step 6: Stir.</div>
-                    <div>Step 7: Add salt, to taste.</div>
-                    <div>Step 8: Eat!!</div>
+                    <p>Level 2 - شوربة عدس</p>
+                    <p>Add water to pot.</p>
+                    <p>Put pot on stove. Boil.</p>
+                    <p>Cut onions, carrots and garlic. Put in pot.</p>
+                    <p>Stir.</p>
+                    <p>Cut beef into tiny(?) cubes. Put in the pot.</p>
+                    <p>Stir.</p>
+                    <p>Add salt, to taste.</p>
+                    <p>Eat!!</p>
                 </div>
                 <div class="CookingSpace">
                     <Item item="CuttingBoard" isSelectable={false}/>
@@ -86,15 +86,19 @@ class GameScreen {
     }
     get onClick() {
         return (event) => {
-            game.items[game.selectedItem].position = undefined
-            game.selectedItem = undefined
+            if(game.selectedItem != undefined) {
+                game.items[game.selectedItem].position = undefined
+                game.selectedItem = undefined
+            }
         }
     }
     get onContextMenu() {
         return (event) => {
             event.preventDefault()
-            game.items[game.selectedItem].position = undefined
-            game.selectedItem = undefined
+            if(game.selectedItem != undefined) {
+                game.items[game.selectedItem].position = undefined
+                game.selectedItem = undefined
+            }
         }
     }
 }
@@ -131,7 +135,8 @@ class Item {
                 return
             }
             if(clickedItem == "CuttingBoard"
-            && game.items[game.selectedItem].canBeCut == true) {
+            && game.selectedItem != undefined
+            && game.items[game.selectedItem]?.canBeCut == true) {
                 Object.values(game.items).forEach((item) => {
                     if(item.position == "CuttingBoard") {
                         item.position = undefined
@@ -166,6 +171,22 @@ class SelectedItem {
         }
     }
 }
+
+window.addEventListener("keydown", function(event) {
+    if(event.keyCode != 32) return
+    const bounds = document.getElementById("frame").getBoundingClientRect()
+    let x = (((Poin.position.x - bounds.left) / bounds.width) * (16 * 3))
+    let y = (((Poin.position.y - bounds.top) / bounds.height) * (9 * 3))
+    x -= 1
+    y -= 1
+    x = x.toFixed(2)
+    y = y.toFixed(2)
+    x += "em"
+    y += "em"
+    const style = "left: " + x + "; " + "top: " + y + ";"
+    navigator.clipboard.writeText(style)
+    console.log(style)
+})
 
 const game = {
     "screen": "GameScreen",

@@ -19,8 +19,6 @@
     margin: auto;
     position: fixed;
     overflow: hidden;
-
-    background-color: green;
 }
 
 .TitleScreen {
@@ -30,8 +28,6 @@
     bottom: 0em;
     position: absolute;
     background-color: orange;
-
-    
 }
 
 .LevelSelectScreen {
@@ -40,7 +36,7 @@
     right: 0em;
     bottom: 0em;
     position: absolute;
-    background-color: blue;
+    background-color: green;
 
     font-size: 2em;
 
@@ -56,216 +52,260 @@
     color: @white;
     font-family: @fonts;
 
+    background-image: url("../images/blocking.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+
     * {
-        cursor: grab;
+        cursor: pointer;
     }
     &[hasSelectedItem] {
         * {
             cursor: grabbing !important;
         }
     }
-}
 
-.CookbookSpace {
-    top: 0em;
-    left: 0em;
-    width: 15em;
-    bottom: 0em;
-    position: absolute;
-    padding: 1em;
-    background-color: #444;
-    div {
-        margin-bottom: 1em / @golden-ratio;
-    }
-}
-
-.CookingSpace {
-    top: 0em;
-    left: 15em;
-    right: 0em;
-    bottom: 0em;
-    padding: 1em;
-    position: absolute;
-
-    .Selected.Item {
-        position: fixed !important;
-        pointer-events: none !important;
-    }
-
-    .Item {
+    .CookbookSpace {
+        top: 1.87em;
+        left: 39.13em;
+        width: 46.47em - 39.13em;;
+        height: 15.67em - 1.87em;
+        padding: 0.33em;
         position: absolute;
-        text-align: center;
+        text-align: right;
 
-        &[isSelectable] {
-            cursor: pointer;
-        }
-
-        &[isSelected] {
-            display: none;
+        p {
+            font-size: 0.66em;
+            margin-bottom: 1em / @golden-ratio;
         }
     }
 
-    #Stove {
-        width: 10em;
-        height: 10em;
-
-        background-color: black;
-
-        &[position=Default] {
-            top: 5em;
-            left: 10em;
-        }
-    }
-
-    #Sink {
-        width: 5em;
-        height: 5em;
-
-        background-color: #AAA;
-
-        &[position=Default] {
-            top: 5em;
-            left: 21em;
-        }
-    }
-
-    #CuttingBoard {
-        width: 10em;
-        height: 5em;
-
-        border-radius: 1em;
-        background-color: #784c2c;
-
-        &[position=Default] {
-            top: 20em;
-            left: 10em;
-        }
-    }
-
-    #Pot {
-        width: 5em;
-        height: 5em;
+    .CookingSpace {
         position: absolute;
-        margin-top: -2.5em;
-        margin-left: -2.5em;
 
-        border-radius: 100%;
-        background-color: gray;
-
-        &[position=Default] {
-            left: 10em;
-            top: 10em;
+        .Selected.Item {
+            position: fixed !important;
+            pointer-events: none !important;
         }
-    }
 
-    #Onions {
-        &[cuts="0"] {
-            &:after {
-                content: "Onions";
+        .Item {
+            position: absolute;
+            text-align: center;
+
+            &[isSelectable] {
+                cursor: grab;
             }
-        }
-        &[cuts="1"] {
-            &:after {
-                content: "Oni ons";
-            }
-        }
-        &[cuts="2"]:after {
-            content: "O ni ons";
-        }
-        &[cuts="3"]:after {
-            content: "O ni on s";
-        }
 
-        &[position=Default] {
-            top: 1em;
-        }
-
-        &[position=CuttingBoard] {
-            top: 23em;
-            left: 12em;
-        }
-    }
-
-    #Carrots {
-        &[cuts="0"] {
-            &:after {
-                content: "Carrots";
-            }
-        }
-        &[cuts="1"] {
-            &:after {
-                content: "Ca rrots";
-            }
-        }
-        &[cuts="2"] {
-            &:after {
-                content: "Ca rr ots";
-            }
-        }
-        &[cuts="3"] {
-            &:after {
-                content: "Ca rr ot s";
+            &[isSelected] {
+                display: none;
             }
         }
 
+        #Stove {
+            width: 6em;
+            height: 6em;
+            margin-top: 6em / -2;
+            margin-left: 6em / -2;
+            border-radius: 100%;
 
-        &[position=Default] {
-            top: 3em;
-        }
-        &[position=CuttingBoard] {
-            top: 23em;
-            left: 12em;
-        }
+            background-color: black;
 
-        color: orange;
-    }
-
-    #Garlic {
-        &::after {
-            content: "Garlic";
+            &[position=Default] {
+                left: 28.00em; top: 16.00em;
+            }
         }
 
-        &[position=Default] {
-            top: 5em;
-        }
-        &[position=CuttingBoard] {
-            top: 23em;
-            left: 12em;
-        }
-    }
+        #Sink {
+            width: 5em;
+            height: 5em;
 
-    #Beef {
-        color: brown;
-        &::after {
-            content: "Beef";
+            background-color: #AAA;
+
+            &[position=Default] {
+                top: 5em;
+                left: 21em;
+            }
         }
 
-        &[position=Default] {
-            top: 9em;
-        }
-        &[position=CuttingBoard] {
-            top: 23em;
-            left: 12em;
-        }
-    }
+        #CuttingBoard {
+            width: 9em;
+            height: 7em;
 
-    #Salt {
-        &::after {
-            content: "Salt";
+            border-radius: 1em;
+            background-color: #784c2c;
+
+            &[position=Default] {
+                left: 14.38em; top: 12.87em;
+            }
         }
 
-        &[position=Default] {
-            top: 7em;
-        }
-    }
+        #Pot {
+            width: 5em;
+            height: 5em;
+            position: absolute;
+            margin-top: -2.5em;
+            margin-left: -2.5em;
 
-    #Knife {
-        &::after {
-            content: "Knife";
+            border-radius: 100%;
+            background-color: gray;
+
+            &[position=Default] {
+                left: 28.00em; top: 16.00em;
+            }
         }
 
-        &[position=Default] {
-            top: 11em;
+        #Onions {
+            width: 4em;
+            height: 1em;
+            color: white;
+            background-color: black;
+            margin-left: 4em / -2;
+            margin-top: 1em / -2;
+
+            &[cuts="0"] {
+                &:after {
+                    content: "Onions";
+                }
+            }
+            &[cuts="1"] {
+                &:after {
+                    content: "Oni ons";
+                }
+            }
+            &[cuts="2"]:after {
+                content: "O ni ons";
+            }
+            &[cuts="3"]:after {
+                content: "O ni on s";
+            }
+
+            &[position=Default] {
+                top: 13.13em;
+                left: 4.93em;
+            }
+
+            &[position=CuttingBoard] {
+                left: 18.69em; top: 16.16em;
+            }
+        }
+
+        #Carrots {
+            width: 4em;
+            height: 1em;
+            color: white;
+            background-color: black;
+            margin-left: 4em / -2;
+            margin-top: 1em / -2;
+
+            &[cuts="0"] {
+                &:after {
+                    content: "Carrots";
+                }
+            }
+            &[cuts="1"] {
+                &:after {
+                    content: "Ca rrots";
+                }
+            }
+            &[cuts="2"] {
+                &:after {
+                    content: "Ca rr ots";
+                }
+            }
+            &[cuts="3"] {
+                &:after {
+                    content: "Ca rr ot s";
+                }
+            }
+
+            &[position=Default] {
+                top: 17.87em;
+                left: 5em;
+            }
+            &[position=CuttingBoard] {
+                left: 18.69em; top: 16.16em;
+            }
+
+            color: orange;
+        }
+
+        #Garlic {
+            width: 4em;
+            height: 1em;
+            color: white;
+            background-color: black;
+            margin-left: 4em / -2;
+            margin-top: 1em / -2;
+
+            &::after {
+                content: "Garlic";
+            }
+
+            &[position=Default] {
+                top: 22.33em;
+                left: 4.73em;
+            }
+            &[position=CuttingBoard] {
+                left: 18.69em; top: 16.16em;
+            }
+        }
+
+        #Beef {
+            width: 4em;
+            height: 1em;
+            color: white;
+            background-color: black;
+            margin-left: 4em / -2;
+            margin-top: 1em / -2;
+
+            color: brown;
+            &::after {
+                content: "Beef";
+            }
+
+            &[position=Default] {
+                left: 10.13em; top: 17.80em;
+            }
+            &[position=CuttingBoard] {
+                left: 18.69em; top: 16.16em;
+            }
+        }
+
+        #Salt {
+            width: 4em;
+            height: 1em;
+            color: white;
+            background-color: black;
+            margin-left: 4em / -2;
+            margin-top: 1em / -2;
+
+            &::after {
+                content: "Salt";
+            }
+
+            &[position=Default] {
+                top: 22em;
+                left: 42.67em;
+            }
+        }
+
+        #Knife {
+            width: 4em;
+            height: 1em;
+            color: white;
+            background-color: black;
+            margin-left: 4em / -2;
+            margin-top: 1em / -2;
+
+            &::after {
+                content: "Knife";
+            }
+
+            &[position=Default] {
+                top: 18.53em;
+                left: 35.07em;
+            }
         }
     }
 }
