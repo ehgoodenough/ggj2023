@@ -67,15 +67,16 @@ class GameScreen {
                     <div>Step 8: Eat!!</div>
                 </div>
                 <div class="CookingSpace">
-                    <Item item="CuttingBoard" unselectable={true}/>
-                    <Item item="Sink" unselectable={true}/>
-                    <Item item="Stove" unselectable={true}/>
+                    <Item item="CuttingBoard" isSelectable={false}/>
+                    <Item item="Sink" isSelectable={false}/>
+                    <Item item="Stove" isSelectable={false}/>
                     <Item item="Pot"/>
                     <Item item="Salt"/>
                     <Item item="Beef"/>
                     <Item item="Onions"/>
                     <Item item="Carrots"/>
                     <Item item="Garlic"/>
+                    <Item item="Knife"/>
                     <SelectedItem/>
                 </div>
             </div>
@@ -83,12 +84,14 @@ class GameScreen {
     }
     get onClick() {
         return (event) => {
+            game.items[game.selectedItem].position = undefined
             game.selectedItem = undefined
         }
     }
     get onContextMenu() {
         return (event) => {
             event.preventDefault()
+            game.items[game.selectedItem].position = undefined
             game.selectedItem = undefined
         }
     }
@@ -97,25 +100,49 @@ class GameScreen {
 class Item {
     render() {
         return (
-            <div class={this.class} onClick={this.onClick} isSelectable={this.props.unselectable != true}
-                style={{"display": game.selectedItem != this.props.item ? "block" : "none"}}>
-                {this.props.item}
-            </div>
+            <div class="Item"
+                id={this.props.item}
+                cuts={game.items[this.props.item]?.cuts || 0}
+                position={game.items[this.props.item]?.position || "Default"}
+                isSelected={game.selectedItem == this.props.item}
+                isSelectable={this.props.isSelectable !== false}
+                onClick={this.onClick}/>
         )
     }
     get onClick() {
         return (event) => {
             event.stopPropagation()
-            if(game.selectedItem != undefined) {
-
+            const clickedItem = this.props.item
+            if(game.selectedItem == "Knife"
+            && clickedItem == "CuttingBoard") {
+                Object.values(game.items).forEach((item) => {
+                    if(item.position == "CuttingBoard"
+                    && item.canBeCut == true) {
+                        console.log(item)
+                        item.cuts = item.cuts || 0
+                        item.cuts += 1
+                        if(item.cuts > item.maxcuts) {
+                            item.cuts = item.maxcuts
+                        }
+                    }
+                })
+                return
+            }
+            if(clickedItem == "CuttingBoard"
+            && game.items[game.selectedItem].canBeCut == true) {
+                Object.values(game.items).forEach((item) => {
+                    if(item.position == "CuttingBoard") {
+                        item.position = undefined
+                    }
+                })
+                game.items[game.selectedItem].position = "CuttingBoard"
+                game.selectedItem = undefined
+                return
             }
 
-            if(this.props.unselectable == true) return
+            if(this.props.isSelectable === false) return
             game.selectedItem = this.props.item
         }
-    }
-    get class() {
-        return ["Item", this.props.item, game.items[this.props.item]?.state || "Default"].join(" ")
     }
 }
 
@@ -123,8 +150,10 @@ class SelectedItem {
     render() {
         if(game.selectedItem == undefined) return
         return (
-            <div class={"SelectedItem" + " " + game.selectedItem} style={this.style}>
-                {game.selectedItem}
+            <div class={"Selected Item"}
+                id={game.selectedItem}
+                cuts={game.items[game.selectedItem]?.cuts || 0}
+                style={this.style}>
             </div>
         )
     }
@@ -141,8 +170,15 @@ const game = {
     // "screen": "TitleScreen",
     "selectedItem": undefined,
     "items": {
-        "CuttingBoard": {
-
-        }
+        "Onions": {"canBeCut": true, "maxcuts": 3},
+        "Carrots": {"canBeCut": true, "maxcuts": 3},
+        "Garlic": {"canBeCut": true, "maxcuts": 3},
+        "Beef": {"canBeCut": true, "maxcuts": 5},
+        "Salt": {},
+        "Stove": {},
+        "Sink": {},
+        "Pot": {},
+        "CuttingBoard": {},
+        "Knife": {},
     }
 }

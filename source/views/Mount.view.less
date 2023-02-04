@@ -83,7 +83,7 @@
     padding: 1em;
     position: absolute;
 
-    .SelectedItem {
+    .Selected.Item {
         position: fixed !important;
         pointer-events: none !important;
     }
@@ -95,46 +95,50 @@
         &[isSelectable] {
             cursor: pointer;
         }
+
+        &[isSelected] {
+            display: none;
+        }
     }
 
-    .Stove {
+    #Stove {
         width: 10em;
         height: 10em;
 
         background-color: black;
 
-        &.Default {
+        &[position=Default] {
             top: 5em;
             left: 10em;
         }
     }
 
-    .Sink {
+    #Sink {
         width: 5em;
         height: 5em;
 
         background-color: #AAA;
 
-        &.Default {
+        &[position=Default] {
             top: 5em;
             left: 21em;
         }
     }
 
-    .CuttingBoard {
+    #CuttingBoard {
         width: 10em;
         height: 5em;
 
         border-radius: 1em;
         background-color: #784c2c;
 
-        &.Default {
+        &[position=Default] {
             top: 20em;
             left: 10em;
         }
     }
 
-    .Pot {
+    #Pot {
         width: 5em;
         height: 5em;
         position: absolute;
@@ -144,33 +148,120 @@
         border-radius: 100%;
         background-color: gray;
 
-        &.Default {
+        &[position=Default] {
             left: 10em;
             top: 10em;
         }
     }
 
-    .Onions {
-        top: 1em;
+    #Onions {
+        &[cuts="0"] {
+            &:after {
+                content: "Onions";
+            }
+        }
+        &[cuts="1"] {
+            &:after {
+                content: "Oni ons";
+            }
+        }
+        &[cuts="2"]:after {
+            content: "O ni ons";
+        }
+        &[cuts="3"]:after {
+            content: "O ni on s";
+        }
+
+        &[position=Default] {
+            top: 1em;
+        }
+
+        &[position=CuttingBoard] {
+            top: 23em;
+            left: 12em;
+        }
     }
 
-    .Carrots {
-        top: 3em;
+    #Carrots {
+        &[cuts="0"] {
+            &:after {
+                content: "Carrots";
+            }
+        }
+        &[cuts="1"] {
+            &:after {
+                content: "Ca rrots";
+            }
+        }
+        &[cuts="2"] {
+            &:after {
+                content: "Ca rr ots";
+            }
+        }
+        &[cuts="3"] {
+            &:after {
+                content: "Ca rr ot s";
+            }
+        }
+
+
+        &[position=Default] {
+            top: 3em;
+        }
+        &[position=CuttingBoard] {
+            top: 23em;
+            left: 12em;
+        }
 
         color: orange;
     }
 
-    .Garlic {
-        top: 5em;
+    #Garlic {
+        &::after {
+            content: "Garlic";
+        }
+
+        &[position=Default] {
+            top: 5em;
+        }
+        &[position=CuttingBoard] {
+            top: 23em;
+            left: 12em;
+        }
     }
 
-    .Salt {
-        top: 7em;
-    }
-
-    .Beef {
-        top: 9em;
-
+    #Beef {
         color: brown;
+        &::after {
+            content: "Beef";
+        }
+
+        &[position=Default] {
+            top: 9em;
+        }
+        &[position=CuttingBoard] {
+            top: 23em;
+            left: 12em;
+        }
+    }
+
+    #Salt {
+        &::after {
+            content: "Salt";
+        }
+
+        &[position=Default] {
+            top: 7em;
+        }
+    }
+
+    #Knife {
+        &::after {
+            content: "Knife";
+        }
+
+        &[position=Default] {
+            top: 11em;
+        }
     }
 }
