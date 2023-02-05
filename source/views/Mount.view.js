@@ -32,7 +32,6 @@ class TitleScreen {
     render() {
         return (
             <div class="TitleScreen" onClick={this.onClick}>
-                TITLE SCREEN - click anywhere to continue
             </div>
         )
     }
@@ -41,21 +40,32 @@ class TitleScreen {
     }
 }
 
+const LevelDetails = {
+    "1": require("../images/level1-select.png"),
+    "2": require("../images/level2-select.png"),
+    "3": require("../images/level3-select.png"),
+}
+
 class LevelSelectScreen {
     render() {
         return (
             <div class="LevelSelectScreen">
-                <div>LEVEL SELECT SCREEN - click on your level</div>
-                <div class="SelectableLevel" onClick={this.onClick(1)}>Level 1 - Shakshoka</div>
-                <div class="SelectableLevel" onClick={this.onClick(2)}>Level 2 - Molokheya</div>
-                <div class="SelectableLevel" onClick={this.onClick(3)}>Level 3 - Takleya</div>
+                <div class="LevelDetails" style={{"background-image": "url(" + LevelDetails[game.lookAtLevel] + ")"}}/>
+                <div class="SelectableLevelTab" id="Level1" onClick={this.onClickTab(1)}></div>
+                <div class="SelectableLevelTab" id="Level2" onClick={this.onClickTab(2)}></div>
+                <div class="SelectableLevelTab" id="Level3" onClick={this.onClickTab(3)}></div>
             </div>
         )
     }
-    onClick(level) {
+    onClickTab(level) {
+        return (event) => {
+            game.lookAtLevel = level
+        }
+    }
+    onClickButton() {
         return (event) => {
             game.screen = "GameScreen"
-            game.level = Deepclone(Levels[level])
+            game.level = Deepclone(Levels[game.lookAtLevel])
         }
     }
 }
@@ -66,6 +76,7 @@ class GameScreen {
         return (
             <div class="GameScreen" onMouseDown={this.onMouseDown} onContextMenu={this.onContextMenu}
                 hasSelectedItem={game.level.selectedItem != undefined}>
+                <div class="Background"/>
                 <div class="CookbookSpace">
                     {game.level.instructions.map((instruction) => <p>{instruction}</p>)}
                 </div>
@@ -79,6 +90,7 @@ class GameScreen {
                         Click here to continue
                     </div>
                 </div>
+                <div class="BurgerMenu" onClick={() => game.screen = "LevelSelectScreen"}/>
             </div>
         )
     }
@@ -215,12 +227,11 @@ const Levels = {
             "CuttingBoard": {"isLocation": true, "isSelectable": false},
         },
         "instructions": [
-            "Level 1 - شوربة عدس",
             "Chop the tomatoes, green peppers, onion.",
             "Put oil in the pan.",
-            "Put the chop vegetables in the pan.",
+            "Put the chopped vegetables in the pan.",
             "Stir until mixed.",
-            "Crack an egg over the pan.",
+            "Crack an egg in the pan.",
             "Add salt and pepper."
         ],
         "interact": function(clickedItem) {
@@ -314,7 +325,7 @@ const Levels = {
             "3. Add the molokheya to the pot.",
             "4. Add the takleya to the pot.",
             "5. Stir.",
-            "6. Add salt and pepper to the pot.",
+            "6. Add salt to the pot.",
         ],
         "items": {
             // Ingredients
@@ -325,6 +336,7 @@ const Levels = {
             // Tools
             "Knife": {},
             "Spoon": {},
+            "Stove": {},
             "Pot": {"isLocation": true},
             "CuttingBoard": {"isLocation": true},
         },
@@ -406,6 +418,8 @@ const Levels = {
 
 window.game = {
     "screen": "GameScreen",
+    // "screen": "LevelSelectScreen",
     // "screen": "TitleScreen",
-    "level": Deepclone(Levels[1])
+    "lookAtLevel": 1,
+    "level": Deepclone(Levels[2])
 }

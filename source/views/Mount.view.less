@@ -27,7 +27,9 @@
     right: 0em;
     bottom: 0em;
     position: absolute;
-    background-color: orange;
+
+    background-size: cover;
+    background-image: url("../images/start-page.png");
 }
 
 .LevelSelectScreen {
@@ -36,11 +38,33 @@
     right: 0em;
     bottom: 0em;
     position: absolute;
-    background-color: green;
 
-    font-size: 2em;
+    background-size: cover;
+    background-image: url("../images/levelselectscreen.png");
 
-    .SelectableLevel {
+    .LevelDetails {
+        top: 0em;
+        left: 0em;
+        right: 0em;
+        bottom: 0em;
+        position: absolute;
+        background-size: cover;
+    }
+
+    .SelectableLevelTab {
+        width: 3em;
+        height: 3em;
+        position: absolute;
+
+        &#Level1 {
+            left: 39.47em; top: 6.3em;
+        }
+        &#Level2 {
+            left: 39.20em; top: 11.17em;
+        }
+        &#Level3 {
+            left: 39.53em; top: 16.30em;
+        }
         &:hover {
             color: red;
         }
@@ -51,12 +75,19 @@
     color: @white;
     font-family: @fonts;
 
-    background-color: #AAA;
-    background-image: url("../images/background.png"), url("../images/blocking.png");
+    background-image: url("../images/blocking.png");
     background-size: cover;
     width: 100%;
     height: 100%;
     cursor: pointer;
+
+    .Background {
+        width: 100%;
+        height: 100%;
+        filter: blur(0.5px);
+        background-size: contain;
+        background-image: url("../images/background.png");
+    }
 
     * {
         cursor: pointer;
@@ -72,7 +103,7 @@
         height: 100%;
         position: absolute;
 
-        z-index: 100;
+        z-index: 110;
         pointer-events: none;
         background-color: fadeout(orange, 50%);
 
@@ -89,22 +120,47 @@
         }
     }
 
+    .BurgerMenu {
+        top: 3em;
+        left: 2.5em;
+        .size(3, 3);
+        z-index: 100;
+        position: absolute;
+
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("../images/burger-menu.png");
+
+        &:hover {
+            .size(4, 4);
+        }
+    }
+
     .CookbookSpace {
-        left: 38.51em; top: 0.73em;
+        right: 1em;
+        top: 1em;
         width: 45.13em - 37.77em;
         height: 10.75em - 0.03em;
 
-        padding: 0.33em;
+        background-size: contain;
+        background-image: url("../images/recipe-note.png");
+
+        padding: 0.7em 0.33em;
         position: absolute;
         text-align: right;
 
         p {
             font-size: 0.66em;
-            margin-bottom: 1em / @golden-ratio;
+            margin-bottom: 0.7em / @golden-ratio;
         }
     }
 
     .CookingSpace {
+        top: 0em;
+        left: 0em;
+        right: 0em;
+        bottom: 0em;
         position: absolute;
 
         .Item {
@@ -136,7 +192,7 @@
                     margin: auto;
 
                     border-radius: 100%;
-                    background-color: rgba(0, 0, 0, 0.5);
+                    background-color: rgba(93, 71, 59, 0.65);
                 }
             }
 
@@ -151,6 +207,15 @@
                 background-size: contain;
                 background-repeat: no-repeat;
                 background-position: center bottom;
+            }
+
+            &:after {
+                z-index: 15;
+                position: absolute;
+                left: 0em;
+                right: 0em;
+                top: -0.5em;
+                text-align: center;
             }
         }
 
