@@ -257,7 +257,7 @@ const Levels = {
                 game.level.items["Pan"].position = "Stove"
                 game.level.items["Pan"].isSelectable = false
                 game.level.selectedItem = undefined
-                play(audios["stove"], {"volume": 0.5})
+                play(audios["stove"], {"volume": 0.8})
                 return
             }
             if(game.level.selectedItem == "Knife"
@@ -265,7 +265,7 @@ const Levels = {
                 Object.values(game.level.items).forEach((item) => {
                     if(item.position == "CuttingBoard"
                     && item.canBeCut == true) {
-                        play(audios["cutting"], {"volume": 0.6, "doNotInterrupt": true})
+                        play(audios["cutting"], {"volume": 0.8, "doNotInterrupt": true})
                         item.cuts = item.cuts || 0
                         item.cuts += 1
                         if(item.cuts >= item.maxcuts) {
@@ -307,7 +307,7 @@ const Levels = {
                 if(game.level.items["Oil"].status == "StirFry") {
                     game.level.items["Oil"].status = "Shakshoka"
                     game.level.items["Egg"].isGone = true
-                    play(audios["eggs-cracking"], {"volume": 0.5})
+                    play(audios["eggs-cracking"], {"volume": 0.8})
                     game.level.selectedItem = undefined
                 }
                 return
@@ -318,6 +318,7 @@ const Levels = {
                     game.level.items["Salt"].isGone = true
                     game.level.selectedItem = undefined
                     game.level.hasWon = true
+                    play(audios["fanfare"], {"volume": 0.1})
                 }
                 return
             }
@@ -374,7 +375,7 @@ const Levels = {
                 game.level.items["Pot"].position = "Stove"
                 game.level.items["Pot"].isSelectable = false
                 game.level.selectedItem = undefined
-                play(audios["stove"], {"volume": 0.5})
+                play(audios["stove"], {"volume": 0.8})
                 return
             }
             if(game.level.selectedItem == "ChickenStock"
@@ -396,7 +397,7 @@ const Levels = {
             && game.level.items["Molokheya"].position == "CuttingBoard") {
                 game.level.items["Molokheya"].cuts = game.level.items["Molokheya"].cuts || 0
                 game.level.items["Molokheya"].cuts += 1
-                play(audios["molkeya-cutting"], {"volume": 0.6, "doNotInterrupt": true})
+                play(audios["molkeya-cutting"], {"volume": 0.8})
                 if(game.level.items["Molokheya"].cuts >= 2) {
                     game.level.items["Molokheya"].cuts = 2
                     game.level.items["Molokheya"].hasBeenChopped = true
@@ -418,7 +419,7 @@ const Levels = {
             && game.level.selectedItem == "Takleya") {
                 game.level.items["Takleya"].position = "Pot"
                 game.level.selectedItem = undefined
-                play(audios["woman-gasping"], {"volume": 0.5})
+                play(audios["woman-gasping"], {"volume": 0.8})
                 return
             }
 
@@ -438,6 +439,7 @@ const Levels = {
             && game.level.selectedItem == "Spices") {
                 game.level.items["Spices"].isGone = true
                 game.level.hasWon = true
+                play(audios["fanfare"], {"volume": 0.1})
                 game.level.selectedItem = undefined
                 return
             }
@@ -484,7 +486,7 @@ const Levels = {
                 game.level.items["Pot"].position = "Stove"
                 game.level.items["Pot"].isSelectable = false
                 game.level.selectedItem = undefined
-                play(audios["stove"], {"volume": 0.5})
+                play(audios["stove"], {"volume": 0.8})
                 return
             }
             console.log(clickedItem, selectedItem)
@@ -533,6 +535,7 @@ const Levels = {
                 game.level.items["Pot"].status = "WrapsAndSoup"
                 game.level.selectedItem = undefined
                 game.level.hasWon = true
+                play(audios["fanfare"], {"volume": 0.1})
                 return
             }
 
@@ -577,10 +580,10 @@ const Navigation = new class {
             audio.currentTime = 0
         })
         if(screen == "TitleScreen" || screen == "GameScreen") {
-            play(audios["music1"], {"volume": 0.2, "loop": true})
+            play(audios["music1"], {"volume": 0.1, "loop": true})
         }
         if(screen == "LevelSelectScreen") {
-            play(audios["music2"], {"volume": 0.2, "loop": true})
+            play(audios["music2"], {"volume": 0.1, "loop": true})
         }
         game.screen = screen
     }
