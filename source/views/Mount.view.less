@@ -52,7 +52,7 @@
     font-family: @fonts;
 
     background-color: #AAA;
-    background-image: url("../images/blocking.png");
+    background-image: url("../images/background.png"), url("../images/blocking.png");
     background-size: cover;
     width: 100%;
     height: 100%;
@@ -128,17 +128,20 @@
         .Selected.Item {
             position: fixed !important;
             pointer-events: none !important;
+            z-index: 100000000 !important;
         }
 
         #CuttingBoard {
-            width: 9em;
-            height: 7em;
+            width: 12em;
+            height: 9em;
 
-            border-radius: 1em;
-            background-color: #784c2c;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center bottom;
+            background-image: url("../images/cuttingboard.png");
 
             z-index: 10;
-            left: 15.39em; top: 14.75em;
+            left: 13.47em; top: 13.5em;
         }
 
         #Pot {
@@ -152,19 +155,19 @@
             background-repeat: no-repeat;
             background-image: url("../images/tasa.png");
 
-            z-index: 10;
-            left: 39.60em; top: 21.10em;
+            z-index: 16;
+            left: 35.33em; top: 21.03em;
 
             &[position=Stove] {
-                left: 30em; top: 11.50em;
+                left: 32.5em; top: 11em;
             }
         }
 
         #Stove {
-            width: 8em;
-            height: 13em;
-            margin-left: 8em / -2;
-            margin-top: 13em / -2;
+            width: 10em;
+            height: 15em;
+            margin-left: 10em / -2;
+            margin-top: 15em / -2;
 
             background-size: contain;
             background-position: center bottom;
@@ -173,7 +176,7 @@
 
             z-index: 5;
 
-            left: 29.26em; top: 15.6em;
+            left: 31.26em; top: 15.6em;
         }
 
         #Onion {
@@ -468,37 +471,37 @@
         }
 
         #Spoon {
-            width: 4em;
-            height: 1em;
-            color: white;
-            background-color: black;
-            margin-left: 4em / -2;
-            margin-top: 1em / -2;
+            .size(2, 8);
+            margin-top: -2em;
+            margin-left: -1.5em;
 
-            &::after {
-                content: "Spoon";
-            }
+            background-size: contain;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-image: url("../images/spoon.png");
 
             z-index: 25;
-            left: 38.53em; top: 18.63em;
+            left: 45.00em; top: 15.70em;
         }
 
         #Knife {
-            width: 4em;
-            height: 1em;
-            margin-top: 1em / -2;
-            margin-left: 4em / -2;
+            .size(2, 8);
+            margin-top: -6.5em;
 
-            color: white;
-            background-color: black;
-
-            &::after {
-                content: "Knife";
-            }
+            background-size: contain;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-image: url("../images/knife.png");
 
             z-index: 25;
-            top: 18.53em;
-            left: 35.07em;
+            left: 41.40em; top: 20.10em;
         }
     }
+}
+
+.size(@width, @height) {
+    width: @width * 1em;
+    height: @height * 1em;
+    margin-left: (@width * 1em) / -2;
+    margin-top: (@height * 1em) / -2;
 }
