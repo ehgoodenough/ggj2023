@@ -22,6 +22,9 @@ export default class Mount {
         )
     }
     get screen() {
+        if(game.screen == "LoadingScreen") {
+            return <LoadingScreen/>
+        }
         if(game.screen == "TitleScreen") {
             return <TitleScreen/>
         }
@@ -35,6 +38,26 @@ export default class Mount {
 //////////////
 // SCREENS //
 ////////////
+
+class LoadingScreen {
+    render() {
+        return (
+            <div class="LoadingScreen" onClick={this.onClick}>
+                <div class="Loading" isShown={this.hasLoaded == false}>تحميل...</div>
+                <div class="StartButton" isShown={this.hasLoaded == true} onClick={this.onClick}>
+                    <img src={require("../images/titlescreen-start.png")}/>
+                </div>
+            </div>
+        )
+    }
+    get hasLoaded() {
+        return Date.now() - game.startTime > 3000
+    }
+    onClick() {
+        Navigation.go("TitleScreen")
+    }
+}
+
 
 class TitleScreen {
     render() {
@@ -613,7 +636,9 @@ const Navigation = new class {
 window.game = {
     // "screen": "GameScreen",
     // "screen": "LevelSelectScreen",
-    "screen": "TitleScreen",
+    // "screen": "TitleScreen",
+    "screen": "LoadingScreen",
+    "startTime": Date.now(),
     "lookAtLevel": 1,
     "level": Deepclone(Levels[3])
 }

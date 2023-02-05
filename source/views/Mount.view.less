@@ -32,6 +32,37 @@
     }
 }
 
+.LoadingScreen {
+    top: 0em;
+    left: 0em;
+    right: 0em;
+    bottom: 0em;
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-family: @fonts;
+
+    .Loading,
+    .StartButton {
+        display: none;
+        &[isShown] {
+            display: block;
+        }
+    }
+
+    img {
+        height: 2em;
+
+        &:hover {
+            height: 3em;
+        }
+    }
+}
+
 .TitleScreen {
     top: 0em;
     left: 0em;
