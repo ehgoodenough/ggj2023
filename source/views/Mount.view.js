@@ -3,12 +3,20 @@ import "views/Mount.view.less"
 import Poin from "poin"
 import Deepclone from "lodash.clonedeep"
 
+let context = require.context("../images/", true, /\.png$/)
+const preloads = context.keys().map((filename) => context(filename))
+
 export default class Mount {
     render() {
         return (
             <div className="Mount">
                 <div className="Frame" id="frame">
                     {this.screen}
+                </div>
+                <div class="Preloads">
+                    {preloads.map((preload) => (
+                        <img class="Preload" src={preload}/>
+                    ))}
                 </div>
             </div>
         )
