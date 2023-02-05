@@ -81,7 +81,7 @@ class GameScreen {
             <div class="GameScreen" onMouseDown={this.onMouseDown} onContextMenu={this.onContextMenu}
                 hasSelectedItem={game.level.selectedItem != undefined}>
                 <div class="Background"/>
-                <div class="Grandma" hasWon={game.level.hasWon}/>
+                <div class="Grandma" hasWon={game.level.hasWon} hasLost={game.level.hasLost}/>
                 <div class="Table"/>
                 <img class="Cookbook" src={game.level.recipe}/>
                 <div class="CookingSpace">
@@ -89,7 +89,18 @@ class GameScreen {
                     <SelectedItem/>
                 </div>
                 <div class="YouWinModal" hasWon={game.level.hasWon == true}>
-                    <div class="YouWin" onClick={() => Navigation.go("LevelSelectScreen")}/>
+                    <div class="YouWin" onClick={() => {
+                        if(Date.now() - game.level.hasWonAt > 3000) {
+                            Navigation.go("LevelSelectScreen")
+                        }
+                    }}/>
+                </div>
+                <div class="YouLoseModal" hasWon={game.level.hasLost == true}>
+                    <div class="YouLost" onClick={() => {
+                        if(Date.now() - game.level.hasLostAt > 3000) {
+                            Navigation.go("LevelSelectScreen")
+                        }
+                    }}/>
                 </div>
                 <div class="BurgerMenu" onClick={(event) => game.level.isPaused = true}/>
                 <div class="PauseModal" isPaused={game.level.isPaused} onClick={(event) => {
@@ -297,6 +308,12 @@ const Levels = {
                     game.level.items["Onion"].isGone = true
                     game.level.items["Tomato"].isGone = true
                     game.level.items["GreenPepper"].isGone = true
+                    if(game.level.items["Oil"].status == "Shakshoka") {
+                        game.level.items["Oil"].status = "StirFry"
+                        game.level.hasLost = true
+                        game.level.hasLostAt = Date.now()
+                        return
+                    }
                     game.level.items["Oil"].status = "StirFry"
                     game.level.items["Egg"].canBePotted = true
                 }
@@ -318,7 +335,8 @@ const Levels = {
                     game.level.items["Salt"].isGone = true
                     game.level.selectedItem = undefined
                     game.level.hasWon = true
-                    play(audios["fanfare"], {"volume": 0.1})
+                    game.level.hasWonAt = Date.now()
+                    // play(audios["fanfare"], {"volume": 0.1})
                 }
                 return
             }
@@ -439,7 +457,8 @@ const Levels = {
             && game.level.selectedItem == "Spices") {
                 game.level.items["Spices"].isGone = true
                 game.level.hasWon = true
-                play(audios["fanfare"], {"volume": 0.1})
+                game.level.hasWonAt = Date.now()
+                // play(audios["fanfare"], {"volume": 0.1})
                 game.level.selectedItem = undefined
                 return
             }
@@ -535,7 +554,8 @@ const Levels = {
                 game.level.items["Pot"].status = "WrapsAndSoup"
                 game.level.selectedItem = undefined
                 game.level.hasWon = true
-                play(audios["fanfare"], {"volume": 0.1})
+                game.level.hasWonAt = Date.now()
+                // play(audios["fanfare"], {"volume": 0.1})
                 return
             }
 
@@ -560,6 +580,7 @@ const audios = {
     "boiling-water":  new Audio(require("../audio/boiling-water.mp3")),
     "boiling-food":  new Audio(require("../audio/boiling-food.mp3")),
     "woman-gasping":  new Audio(require("../audio/woman-gasping.mp3")),
+    "fanfare":  new Audio(require("../audio/fanfare.mp3")),
 }
 function play(audio, {loop = false, volume = 1, doNotInterrupt = false} = {}) {
     if(doNotInterrupt == true

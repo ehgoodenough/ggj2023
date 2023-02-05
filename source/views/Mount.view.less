@@ -143,10 +143,15 @@
         z-index: 1;
         position: absolute;
         background-size: contain;
-        background-image: url("../images/teta.png");
+
+        &[hasLost] {
+            right: 15em;
+            background-image: url("../images/pissed.png");
+        }
 
         &[hasWon] {
             right: 15em;
+            background-image: url("../images/teta.png");
         }
 
         transition-property: right;
@@ -175,7 +180,8 @@
         }
     }
 
-    .YouWinModal  {
+    .YouWinModal,
+    .YouLoseModal,  {
         top: 0em;
         left: 0em;
         right: 0em;
@@ -200,11 +206,10 @@
             transition-delay: 1.5s;
         }
 
-        .YouWin {
+        .YouWin, .YouLost {
             background-position: center;
             background-size: contain;
             background-repeat: no-repeat;
-            background-image: url("../images/win.png");
 
             width: 27em;
             height: 27em;
@@ -217,6 +222,12 @@
                 height: 28em;
                 transition-duration: 0.1s;
             }
+        }
+        .YouWin {
+            background-image: url("../images/win.png");
+        }
+        .YouLost {
+            background-image: url("../images/lost.png");
         }
     }
 
