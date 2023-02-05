@@ -79,6 +79,8 @@ class GameScreen {
             <div class="GameScreen" onMouseDown={this.onMouseDown} onContextMenu={this.onContextMenu}
                 hasSelectedItem={game.level.selectedItem != undefined}>
                 <div class="Background"/>
+                <div class="Grandma" hasWon={game.level.hasWon}/>
+                <div class="Table"/>
                 <div class="CookbookSpace">
                     {game.level.instructions.map((instruction) => <p>{instruction}</p>)}
                 </div>
@@ -89,11 +91,14 @@ class GameScreen {
                 <div class="YouWinModal" hasWon={game.level.hasWon == true}>
                     <h1>Recipe Complete!!</h1>
                     <div class="ContinueButton" onClick={() => game.screen = "LevelSelectScreen"}>
-                        Click here to continue
+                        Click here to continue.
                     </div>
                 </div>
                 <div class="BurgerMenu" onClick={(event) => game.level.isPaused = true}/>
-                <div class="PauseModal" isPaused={game.level.isPaused} onClick={(event) => {event.stopPropagation(); game.level.isPaused = false}}>
+                <div class="PauseModal" isPaused={game.level.isPaused} onClick={(event) => {
+                    event.stopPropagation()
+                    game.level.isPaused = false
+                }}>
                     <div class="PauseModalBox" onClick={(event) => event.stopPropagation()}/>
                     <div class="BackButton" onClick={(event) => game.screen = "LevelSelectScreen"}/>
                     <div class="RestartButton" onClick={(event) => game.level = Deepclone(Levels[game.level.number])}/>
@@ -408,7 +413,7 @@ const Levels = {
             && game.level.selectedItem == "Spoon") {
                 game.level.items["Takleya"].isGone = true
                 game.level.items["Molokheya"].isGone = true
-                 game.level.items["Pot"].status = "Finished"
+                game.level.items["Pot"].status = "Finished"
             }
 
             if(clickedItem == "Pot"
