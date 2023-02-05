@@ -32,6 +32,7 @@ class TitleScreen {
     render() {
         return (
             <div class="TitleScreen" onClick={this.onClick}>
+                <div class="StartButton"/>
             </div>
         )
     }
@@ -54,6 +55,7 @@ class LevelSelectScreen {
                 <div class="SelectableLevelTab" id="Level1" onClick={this.onClickTab(1)}></div>
                 <div class="SelectableLevelTab" id="Level2" onClick={this.onClickTab(2)}></div>
                 <div class="SelectableLevelTab" id="Level3" onClick={this.onClickTab(3)}></div>
+                <div class="PlayButton" onClick={this.onClickButton()}/>
             </div>
         )
     }
@@ -90,7 +92,12 @@ class GameScreen {
                         Click here to continue
                     </div>
                 </div>
-                <div class="BurgerMenu" onClick={() => game.screen = "LevelSelectScreen"}/>
+                <div class="BurgerMenu" onClick={(event) => game.level.isPaused = true}/>
+                <div class="PauseModal" isPaused={game.level.isPaused} onClick={(event) => {event.stopPropagation(); game.level.isPaused = false}}>
+                    <div class="PauseModalBox" onClick={(event) => event.stopPropagation()}/>
+                    <div class="BackButton" onClick={(event) => game.screen = "LevelSelectScreen"}/>
+                    <div class="RestartButton" onClick={(event) => game.level = Deepclone(Levels[game.level.number])}/>
+                </div>
             </div>
         )
     }
@@ -210,6 +217,7 @@ window.addEventListener("keydown", function(event) {
 
 const Levels = {
     "1": {
+        "number": 1,
         "name": "Shakshoka",
         "items": {
             // Ingredients
@@ -223,7 +231,7 @@ const Levels = {
             "Knife": {},
             "Spoon": {},
             "Stove": {"isLocation": true, "isSelectable": false},
-            "Pan": {"isLocation": true, "isSelectable": false},
+            "Pan": {"isLocation": true},
             "CuttingBoard": {"isLocation": true, "isSelectable": false},
         },
         "instructions": [
@@ -236,7 +244,6 @@ const Levels = {
             "Add salt and pepper."
         ],
         "interact": function(clickedItem) {
-            console.log(game.level.selectedItem, "onto", clickedItem)
             if(clickedItem == "Stove"
             && game.level.selectedItem == "Pan") {
                 game.level.items["Pan"].position = "Stove"
@@ -319,6 +326,7 @@ const Levels = {
         }
     },
     "2": {
+        "number": 2,
         "name": "Molokheya",
         "instructions": [
             "1. Put the pot on the stove.",
@@ -326,18 +334,20 @@ const Levels = {
             "2. Chop and add the molokheya.",
             "4. Add the takleya.",
             "6. Stir.",
-            "5. Add salt.",
+            "5. Add spices.",
         ],
         "items": {
             // Ingredients
             "ChickenStock": {},
-            "Molokheya": {"hasBlobShadow": true},
-            "Takleya": {"hasBlobShadow": true},
+            "Molokheya": {},
+            "Takleya": {},
             "Salt": {"hasBlobShadow": true},
             "Spices": {"hasBlobShadow": true},
             // Tools
-            "Knife": {},
+            "Knife2": {},
             "Spoon": {},
+            "Plate1": {"isSelectable": false},
+            "Plate2": {"isSelectable": false},
             "Pot": {"isLocation": true},
             "Stove": {"isLocation": true, "isSelectable": false},
             "CuttingBoard": {"isLocation": true, "isSelectable": false},
@@ -363,7 +373,7 @@ const Levels = {
                 game.level.selectedItem = undefined
                 return
             }
-            if(game.level.selectedItem == "Knife"
+            if(game.level.selectedItem == "Knife2"
             && clickedItem == "CuttingBoard"
             && game.level.items["Molokheya"].position == "CuttingBoard") {
                 game.level.items["Molokheya"].cuts = game.level.items["Molokheya"].cuts || 0
@@ -403,8 +413,8 @@ const Levels = {
 
             if(clickedItem == "Pot"
             && game.level.items["Pot"].status == "Finished"
-            && game.level.selectedItem == "Salt") {
-                game.level.items["Salt"].isGone = true
+            && game.level.selectedItem == "Spices") {
+                game.level.items["Spices"].isGone = true
                 game.level.hasWon = true
                 game.level.selectedItem = undefined
                 return
@@ -424,5 +434,5 @@ window.game = {
     // "screen": "LevelSelectScreen",
     // "screen": "TitleScreen",
     "lookAtLevel": 1,
-    "level": Deepclone(Levels[2])
+    "level": Deepclone(Levels[1])
 }

@@ -30,6 +30,23 @@
 
     background-size: cover;
     background-image: url("../images/start-page.png");
+
+    .StartButton {
+        .size(8, 4);
+        position: absolute;
+        left: 24.07em; top: 17.90em;
+
+        cursor: pointer;
+
+        &:hover {
+            .size(10, 5);
+        }
+
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("../images/titlescreen-start.png");
+    }
 }
 
 .LevelSelectScreen {
@@ -68,6 +85,22 @@
         &:hover {
             color: red;
         }
+    }
+
+    .PlayButton {
+        .size(10, 5);
+        position: absolute;
+        left: 31.20em; top: 17.30em;
+        cursor: pointer;
+
+        &:hover {
+            .size(12, 6);
+        }
+
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("../images/play.png");
     }
 }
 
@@ -119,6 +152,70 @@
             &:hover {
                 color: red;
             }
+        }
+    }
+
+    .PauseModal {
+        top: 0em;
+        left: 0em;
+        right: 0em;
+        bottom: 0em;
+        position: absolute;
+        z-index: 10000000000000;
+
+        background-color: rgba(93, 71, 59, 0.65);
+
+        display: none;
+        &[isPaused] {
+            display: block;
+        }
+
+        .PauseModalBox {
+            top: 0em;
+            left: 0em;
+            right: 0em;
+            bottom: 0em;
+            width: 20em;
+            height: 15em;
+            margin: auto;
+            position: absolute;
+
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url("../images/pausemodal.png");
+        }
+
+        .BackButton {
+            .size(9, 5);
+            position: absolute;
+            left: 24.2em; top: 11.37em;
+            cursor: pointer;
+
+            &:hover {
+                .size(10, 6);
+            }
+
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url("../images/pausemodal-back.png");
+        }
+
+        .RestartButton {
+            .size(9, 5);
+            position: absolute;
+            left: 24.2em; top: 15.7em;
+            cursor: pointer;
+
+            &:hover {
+                .size(10, 6);
+            }
+
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url("../images/pausemodal-restart.png");
         }
     }
 
@@ -439,12 +536,9 @@
             }
 
             z-index: 20;
-
-            &[position=Default] {
-                left: 4.20em; top: 17.57em;
-            }
+            left: 4.20em; top: 17.57em;
             &[position=CuttingBoard] {
-                left: 19.53em; top: 17.77em;
+                left: 19.53em; top: 15.77em;
             }
             &[position=Pot] {
                 left: 31.80em; top: 13.37em;
@@ -465,6 +559,24 @@
             &[position=Pot] {
                 left: 31.80em; top: 13.37em;
             }
+        }
+
+        #Plate1 {
+            .size(6, 6);
+
+            .Image {background-image: url("../images/plate.png");}
+
+            z-index: 19;
+            left: 4.33em; top: 12em;
+        }
+
+        #Plate2 {
+            .size(6, 6);
+
+            .Image {background-image: url("../images/plate.png");}
+
+            z-index: 19;
+            left: 4.20em; top: 17em;
         }
 
         #Salt {
@@ -540,6 +652,15 @@
             &.Selected {
                 transform: rotate(0deg);
             }
+        }
+
+        #Knife2 {
+            .size(10, 7);
+
+            .Image {background-image: url("../images/knife2.png");}
+
+            z-index: 25;
+            left: 19.73em; top: 22.57em;
         }
     }
 }
