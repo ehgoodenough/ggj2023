@@ -139,6 +139,7 @@ class SelectedItem {
         return (
             <div class={"Selected Item"}
                 id={game.level.selectedItem}
+                status={game.level.items[game.level.selectedItem]?.status}
                 cuts={game.level.items[game.level.selectedItem]?.cuts || 0}
                 style={this.style}>
                 <div class="Image"/>
@@ -439,6 +440,96 @@ const Levels = {
 
             game.level.selectedItem = clickedItem
         }
+    },
+    "3": {
+        "number": 3,
+        "name": "Mashy",
+        "instructions": [
+            "Make the stuffing by mixing the veggies then the tomato paste into the rice.",
+            "Make the rolls by placing the stuffing on the vine leaf and wrapping them.",
+            "Put the pot on the stove. Put the rolls in the pot.",
+            "Add the chicken stock.",
+        ],
+        "items": {
+            // Ingredients
+            "ChickenStock": {},
+            "TomatoPaste": {},
+            "Rice": {"isLocation": true},
+            "Veggies": {},
+            "LeafPlate": {"isLocation": true},
+            "Salt": {"hasBlobShadow": true},
+            // Tools
+            "Knife": {},
+            "Spoon": {},
+            "Pot": {"isLocation": true},
+            "Stove": {"isLocation": true, "isSelectable": false},
+            "CuttingBoard": {"isLocation": true, "isSelectable": false},
+            "Plate1": {"isSelectable": false},
+            "Plate2": {"isSelectable": false},
+        },
+        "interact": function(clickedItem) {
+            const selectedItem = game.level.selectedItem
+            if(selectedItem == "Pot"
+            && clickedItem == "Stove") {
+                game.level.items["Pot"].position = "Stove"
+                game.level.items["Pot"].isSelectable = false
+                game.level.selectedItem = undefined
+                return
+            }
+            console.log(clickedItem, selectedItem)
+            if(clickedItem == "Rice"
+            && selectedItem == "Veggies") {
+                game.level.items["Veggies"].position = "Rice"
+                game.level.selectedItem = undefined
+                return
+            }
+            if(clickedItem == "Rice"
+            && selectedItem == "TomatoPaste") {
+                if(game.level.items["Veggies"].position == "Rice") {
+                    game.level.items["TomatoPaste"].isGone = true
+                    game.level.items["Veggies"].isGone = true
+                    game.level.items["Rice"].status = "Mixed"
+                    game.level.selectedItem = undefined
+                }
+                return
+            }
+            if(clickedItem == "LeafPlate"
+            && selectedItem == "Rice"
+            && game.level.items["Rice"].status == "Mixed") {
+                game.level.items["LeafPlate"].status = "Stuffing"
+                game.level.items["Rice"].isGone = true
+                game.level.selectedItem = undefined
+                return
+            }
+            if(clickedItem == "LeafPlate"
+            && game.level.items["LeafPlate"].status == "Stuffing") {
+                game.level.items["LeafPlate"].status = "Wrapped"
+                return
+            }
+            if(clickedItem == "Pot"
+            && selectedItem == "LeafPlate"
+            && game.level.items["LeafPlate"].status == "Wrapped") {
+                game.level.items["LeafPlate"].isGone = true
+                game.level.items["Pot"].status = "Wraps"
+                game.level.selectedItem = undefined
+                return
+            }
+            if(selectedItem == "ChickenStock"
+            && clickedItem == "Pot"
+            && game.level.items["Pot"].status == "Wraps") {
+                game.level.items["ChickenStock"].isGone = true
+                game.level.items["Pot"].status = "WrapsAndSoup"
+                game.level.selectedItem = undefined
+                game.level.hasWon = true
+                return
+            }
+
+            if(game.level.items[clickedItem].isSelectable === false) {
+                return
+            }
+
+            game.level.selectedItem = clickedItem
+        }
     }
 }
 
@@ -447,5 +538,5 @@ window.game = {
     // "screen": "LevelSelectScreen",
     // "screen": "TitleScreen",
     "lookAtLevel": 1,
-    "level": Deepclone(Levels[1])
+    "level": Deepclone(Levels[3])
 }

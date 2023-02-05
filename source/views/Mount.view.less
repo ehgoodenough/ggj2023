@@ -409,6 +409,14 @@
             &[status=Finished] {
                 .Image {background-image: url("../images/pot-molokheya.png");}
             }
+
+            &[status=Wraps] {
+                .Image {background-image: url("../images/pot-wraps.png");}
+            }
+
+            &[status=WrapsAndSoup] {
+                .Image {background-image: url("../images/pot-wraps-soup.png");}
+            }
         }
 
         #Pan {
@@ -670,6 +678,72 @@
 
             z-index: 20;
             left: 10.07em; top: 17.63em;
+        }
+
+        #Rice {
+            .size(6, 4);
+
+            &:hover:after {
+                content: "Rice";
+            }
+
+            .Image {background-image: url("../images/rice.png");}
+
+            &[status=Mixed] {
+                .Image {background-image: url("../images/ricemix.png");}
+            }
+
+            z-index: 20;
+            left: 4.20em; top: 18em;
+        }
+
+        #Veggies {
+            .size(4, 4);
+
+            .Image {background-image: url("../images/veggies.png");}
+
+            &:hover:after {
+                content: "Veggies";
+            }
+
+            z-index: 20;
+            left: 4.33em; top: 12.75em;
+            &[position=Rice] {
+                left: 4.20em; top: 17.7em;
+            }
+        }
+
+        #TomatoPaste {
+            .size(7, 4);
+
+            .Image {background-image: url("../images/tomato-paste.png");}
+
+            &:hover:after {
+                content: "Tomato Paste";
+            }
+
+            z-index: 20;
+            left: 9.87em; top: 12.43em;
+        }
+
+        #LeafPlate {
+            .size(7, 4);
+
+            .Image {background-image: url("../images/leafplate0.png");}
+
+            &[status=Stuffing] {
+                .Image {background-image: url("../images/leafplate1.png");}
+            }
+            &[status=Wrapped] {
+                .Image {background-image: url("../images/leafplate2.png");}
+            }
+
+            &:hover:after {
+                content: "Grape Leaf";
+            }
+
+            z-index: 20;
+            left: 4.47em; top: 22.63em;
         }
 
         #Spoon {
