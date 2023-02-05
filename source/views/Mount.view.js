@@ -263,7 +263,8 @@ const Levels = {
                 }
                 return
             }
-            if(game.level.selectedItem == "Egg") {
+            if(game.level.selectedItem == "Egg"
+            && clickedItem == "Pot") {
                 if(game.level.items["Oil"].status == "StirFry") {
                     game.level.items["Oil"].status = "Shakshoka"
                     game.level.items["Egg"].isGone = true
@@ -271,7 +272,8 @@ const Levels = {
                 }
                 return
             }
-            if(game.level.selectedItem == "Salt") {
+            if(game.level.selectedItem == "Salt"
+            && clickedItem == "Pot") {
                 if(game.level.items["Oil"].status == "Shakshoka") {
                     game.level.items["Salt"].isGone = true
                     game.level.selectedItem = undefined

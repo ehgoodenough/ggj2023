@@ -180,132 +180,102 @@
         }
 
         #Onion {
-            width: 4em;
-            height: 1em;
-            margin-top: 1em / -2;
-            margin-left: 4em / -2;
+            .size(7, 4);
 
-            color: white;
-            background-color: black;
+            background-size: contain;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-image: url("../images/onion0.png");
 
-            &[cuts="0"] {
-                &:after {
-                    content: "Onion";
-                }
-            }
             &[cuts="1"] {
-                &:after {
-                    content: "On ion";
-                }
+                background-image: url("../images/onion1.png");
             }
-            &[cuts="2"]:after {
-                content: "On i on";
+            &[cuts="2"] {
+                background-image: url("../images/onion2.png");
             }
 
-            z-index: 20;
-            &[position=Default] {
-                top: 13.13em;
-                left: 4.93em;
+            &:hover:after {
+                content: "Onion";
             }
+
+            z-index: 19;
+            top: 13.13em; left: 4.93em;
             &[position=CuttingBoard] {
-                left: 18.69em; top: 16.16em;
+                left: 19.93em; top: 17em;
             }
             &[position=Pot] {
-                left: 28.60em; top: 13.63em;
+                left: 31.13em; top: 13.03em;
             }
         }
 
         #GreenPepper {
-            width: 4em;
-            height: 1em;
-            margin-top: 1em / -2;
-            margin-left: 4em / -2;
+            .size(7, 4);
 
-            color: green;
-            background-color: black;
+            background-size: contain;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-image: url("../images/greenpepper0.png");
 
-            &[cuts="0"] {
-                &:after {
-                    content: "Pepper";
-                }
-            }
             &[cuts="1"] {
-                &:after {
-                    content: "Pe pper";
-                }
+                background-image: url("../images/greenpepper1.png");
             }
             &[cuts="2"] {
-                &:after {
-                    content: "Pe pp er";
-                }
+                .size(7, 4);
+                background-image: url("../images/greenpepper2.png");
+            }
+
+            &:hover:after {
+                content: "Green Pepper";
             }
 
             z-index: 20;
-
-            &[position=Default] {
-                top: 17.87em;
-                left: 5em;
-            }
+            top: 17.87em; left: 5em;
             &[position=CuttingBoard] {
-                left: 18.69em; top: 16.16em;
+                left: 19.93em; top: 16.7em;
             }
             &[position=Pot] {
-                left: 28.60em; top: 13.63em;
+                left: 31.13em; top: 13.03em;
             }
         }
 
         #Tomato {
-            width: 3em * 2;
-            height: 2.33em * 2;
-            margin-left: 3em / -2 * 2;
-            margin-top: 2.33em / -2 * 2;
+            .size(7, 4);
 
-            color: red;
             background-size: contain;
-            background-position: center;
+            background-position: center bottom;
             background-repeat: no-repeat;
-            background-image: url("../images/tomatoe.png");
+            background-image: url("../images/tomato0.png");
 
-            &[cuts="0"] {
-                &:after {
-                    content: "Tomato";
-                }
-            }
             &[cuts="1"] {
-                &:after {
-                    content: "To mato";
-                }
+                background-image: url("../images/tomato1.png");
             }
             &[cuts="2"] {
-                &:after {
-                    content: "To ma to";
-                }
+                background-image: url("../images/tomato2.png");
+            }
+
+            &:hover:after {
+                content: "Tomato";
             }
 
             z-index: 20;
-
-            &[position=Default] {
-                top: 22.33em;
-                left: 4.73em;
-            }
+            top: 22.33em; left: 4.73em;
             &[position=CuttingBoard] {
-                left: 18.69em; top: 16.16em;
+                left: 19.93em; top: 16.7em;
             }
             &[position=Pot] {
-                left: 28.60em; top: 13.63em;
+                left: 31.13em; top: 13.03em;
             }
         }
 
         #Egg {
-            width: 4em;
-            height: 1em;
-            margin-top: 1em / -2;
-            margin-left: 4em / -2;
+            .size(4, 4);
 
-            color: yellow;
-            background-color: black;
+            background-size: contain;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-image: url("../images/egg.png");
 
-            &::after {
+            &:hover:after {
                 content: "Egg";
             }
 
@@ -322,36 +292,35 @@
         }
 
         #Oil {
-            width: 4em;
-            height: 1em;
-            margin-top: 1em / -2;
-            margin-left: 4em / -2;
+            .size(4, 4);
 
-            color: white;
-            background-color: black;
-
-            &::after {
-                content: "Oil";
-            }
+            background-size: contain;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-image: url("../images/oil-bottle.png");
 
             z-index: 17;
             &[position=Default] {
                 left: 10.13em; top: 12.97em;
+
+                &:hover:after {
+                    content: "Oil";
+                }
             }
             &[position=Pot] {
-                left: 28.60em; top: 13.63em;
+                left: 31.40em; top: 13.40em;
+                .size(8, 4);
+                background-image: url("../images/oil-pool.png");
             }
 
             &[status=StirFry] {
-                &::after {
-                    content: "Stir Fry";
-                }
+                .size(6, 3);
+                background-image: url("../images/stirfry.png");
             }
 
             &[status=Shakshoka] {
-                &::after {
-                    content: "Shakshoka";
-                }
+                .size(6, 3);
+                background-image: url("../images/shakshooka.png");
             }
         }
 
@@ -425,15 +394,14 @@
         }
 
         #Salt {
-            width: 4em;
-            height: 1em;
-            margin-top: 1em / -2;
-            margin-left: 4em / -2;
+            .size(4, 4);
 
-            color: white;
-            background-color: black;
+            background-size: contain;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-image: url("../images/salt-shaker.png");
 
-            &::after {
+            &:hover:after {
                 content: "Salt";
             }
 
