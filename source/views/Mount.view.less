@@ -123,6 +123,35 @@
             &[isPaused] {
                 pointer-events: none !important;
             }
+
+            &[hasBlobShadow] {
+                .BlobShadow {
+                    width: 4em;
+                    height: 2em;
+                    z-index: 0;
+                    position: absolute;
+                    bottom: -0.5em;
+                    left: 0em;
+                    right: 0em;
+                    margin: auto;
+
+                    border-radius: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                }
+            }
+
+            .Image {
+                top: 0em;
+                left: 0em;
+                right: 0em;
+                bottom: 0em;
+                z-index: 5;
+                position: absolute;
+
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center bottom;
+            }
         }
 
         .Selected.Item {
@@ -135,10 +164,9 @@
             width: 12em;
             height: 9em;
 
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center bottom;
-            background-image: url("../images/cuttingboard.png");
+            .Image {
+                background-image: url("../images/cuttingboard.png");
+            }
 
             z-index: 10;
             left: 13.47em; top: 13.5em;
@@ -150,13 +178,10 @@
             margin-top: 10em / -2;
             margin-left: 10em / -2;
 
-            background-size: contain;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-image: url("../images/tasa.png");
+            .Image {background-image: url("../images/tasa.png");}
 
             z-index: 16;
-            left: 35.33em; top: 21.03em;
+            left: 40.80em; top: 16.77em;
 
             &[position=Stove] {
                 left: 32.5em; top: 11em;
@@ -169,10 +194,7 @@
             margin-left: 10em / -2;
             margin-top: 15em / -2;
 
-            background-size: contain;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-image: url("../images/stove.png");
+            .Image {background-image: url("../images/stove.png");}
 
             z-index: 5;
 
@@ -182,16 +204,13 @@
         #Onion {
             .size(7, 4);
 
-            background-size: contain;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-image: url("../images/onion0.png");
+            .Image {background-image: url("../images/onion0.png");}
 
             &[cuts="1"] {
-                background-image: url("../images/onion1.png");
+                .Image {background-image: url("../images/onion1.png");}
             }
             &[cuts="2"] {
-                background-image: url("../images/onion2.png");
+                .Image {background-image: url("../images/onion2.png");}
             }
 
             &:hover:after {
@@ -211,17 +230,14 @@
         #GreenPepper {
             .size(7, 4);
 
-            background-size: contain;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-image: url("../images/greenpepper0.png");
+            .Image {background-image: url("../images/greenpepper0.png");}
 
             &[cuts="1"] {
-                background-image: url("../images/greenpepper1.png");
+                .Image {background-image: url("../images/greenpepper1.png");}
             }
             &[cuts="2"] {
                 .size(7, 4);
-                background-image: url("../images/greenpepper2.png");
+                .Image {background-image: url("../images/greenpepper2.png");}
             }
 
             &:hover:after {
@@ -241,16 +257,13 @@
         #Tomato {
             .size(7, 4);
 
-            background-size: contain;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-image: url("../images/tomato0.png");
+            .Image {background-image: url("../images/tomato0.png");}
 
             &[cuts="1"] {
-                background-image: url("../images/tomato1.png");
+                .Image {background-image: url("../images/tomato1.png");}
             }
             &[cuts="2"] {
-                background-image: url("../images/tomato2.png");
+                .Image {background-image: url("../images/tomato2.png");}
             }
 
             &:hover:after {
@@ -270,10 +283,7 @@
         #Egg {
             .size(4, 4);
 
-            background-size: contain;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-image: url("../images/egg.png");
+            .Image {background-image: url("../images/egg.png");}
 
             &:hover:after {
                 content: "Egg";
@@ -294,10 +304,7 @@
         #Oil {
             .size(4, 4);
 
-            background-size: contain;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-image: url("../images/oil-bottle.png");
+            .Image {background-image: url("../images/oil-bottle.png");}
 
             z-index: 17;
             &[position=Default] {
@@ -310,17 +317,17 @@
             &[position=Pot] {
                 left: 31.40em; top: 13.40em;
                 .size(8, 4);
-                background-image: url("../images/oil-pool.png");
+                .Image {background-image: url("../images/oil-pool.png");}
             }
 
             &[status=StirFry] {
                 .size(6, 3);
-                background-image: url("../images/stirfry.png");
+                .Image {background-image: url("../images/stirfry.png");}
             }
 
             &[status=Shakshoka] {
                 .size(6, 3);
-                background-image: url("../images/shakshooka.png");
+                .Image {background-image: url("../images/shakshooka.png");}
             }
         }
 
@@ -396,10 +403,7 @@
         #Salt {
             .size(4, 4);
 
-            background-size: contain;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-image: url("../images/salt-shaker.png");
+            .Image {background-image: url("../images/salt-shaker.png");}
 
             &:hover:after {
                 content: "Salt";
@@ -439,30 +443,36 @@
         }
 
         #Spoon {
-            .size(2, 8);
+            .size(3, 9);
             margin-top: -2em;
             margin-left: -1.5em;
 
-            background-size: contain;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-image: url("../images/spoon.png");
+            .Image {background-image: url("../images/spoon.png");}
 
             z-index: 25;
-            left: 45.00em; top: 15.70em;
+            left: 31.40em; top: 21.5em;
+
+            transform: rotate(90deg);
+
+            &.Selected {
+                transform: rotate(0deg);
+            }
         }
 
         #Knife {
-            .size(2, 8);
-            margin-top: -6.5em;
+            .size(2.5, 10);
+            margin-top: -8.5em;
 
-            background-size: contain;
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-image: url("../images/knife.png");
+            .Image {background-image: url("../images/knife.png");}
 
             z-index: 25;
-            left: 41.40em; top: 20.10em;
+            left: 19.33em; top: 27.57em;
+
+            transform: rotate(-90deg);
+
+            &.Selected {
+                transform: rotate(0deg);
+            }
         }
     }
 }

@@ -109,6 +109,7 @@ class SelectedItem {
                 id={game.level.selectedItem}
                 cuts={game.level.items[game.level.selectedItem]?.cuts || 0}
                 style={this.style}>
+                <div class="Image"/>
             </div>
         )
     }
@@ -133,8 +134,17 @@ class Item {
                 isSelectable={this.isSelectable}
                 isPaused={this.isPaused}
                 onMouseDown={this.onMouseDown}
-                onMouseUp={this.onMouseUp}/>
+                onMouseUp={this.onMouseUp}
+                hasBlobShadow={this.hasBlobShadow}>
+                <div class="BlobShadow"/>
+                <div class="Image"/>
+            </div>
         )
+    }
+    get hasBlobShadow() {
+        return game.level.items[this.props.item]?.hasBlobShadow
+            && game.level.items[this.props.item].position == undefined
+            && game.selectedItem != this.props.item
     }
     get isSelectable() {
         if(game.level.items[this.props.item].isSelectable === false) {
@@ -191,12 +201,12 @@ const Levels = {
         "name": "Shakshoka",
         "items": {
             // Ingredients
-            "Onion": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
-            "GreenPepper": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
-            "Tomato": {"canBeCut": true, "maxcuts": 2, "canBePotted": false},
-            "Oil": {"canBePotted": true},
-            "Egg": {},
-            "Salt": {},
+            "Onion": {"canBeCut": true, "maxcuts": 2, "canBePotted": false, "hasBlobShadow": true},
+            "GreenPepper": {"canBeCut": true, "maxcuts": 2, "canBePotted": false, "hasBlobShadow": true},
+            "Tomato": {"canBeCut": true, "maxcuts": 2, "canBePotted": false, "hasBlobShadow": true},
+            "Oil": {"canBePotted": true, "hasBlobShadow": true},
+            "Egg": {"hasBlobShadow": true},
+            "Salt": {"hasBlobShadow": true},
             // Tools
             "Knife": {},
             "Spoon": {},
