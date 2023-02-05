@@ -200,9 +200,22 @@
             transition-delay: 1.5s;
         }
 
-        .ContinueButton {
+        .YouWin {
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-image: url("../images/win.png");
+
+            width: 27em;
+            height: 27em;
+
+            transition-property: width, height;
+            transition-duration: 0.1s;
+
             &:hover {
-                color: red;
+                width: 28em;
+                height: 28em;
+                transition-duration: 0.1s;
             }
         }
     }

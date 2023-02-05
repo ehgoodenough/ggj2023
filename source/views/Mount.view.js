@@ -89,10 +89,7 @@ class GameScreen {
                     <SelectedItem/>
                 </div>
                 <div class="YouWinModal" hasWon={game.level.hasWon == true}>
-                    <h1>Recipe Complete!!</h1>
-                    <div class="ContinueButton" onClick={() => Navigation.go("LevelSelectScreen")}>
-                        Click here to continue.
-                    </div>
+                    <div class="YouWin" onClick={() => Navigation.go("LevelSelectScreen")}/>
                 </div>
                 <div class="BurgerMenu" onClick={(event) => game.level.isPaused = true}/>
                 <div class="PauseModal" isPaused={game.level.isPaused} onClick={(event) => {
