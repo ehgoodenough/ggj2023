@@ -45,21 +45,15 @@ class TitleScreen {
         )
     }
     onClick() {
-        game.screen = "LevelSelectScreen"
+        Navigation.go("LevelSelectScreen")
     }
-}
-
-const LevelDetails = {
-    "1": require("../images/level1-select.png"),
-    "2": require("../images/level2-select.png"),
-    "3": require("../images/level3-select.png"),
 }
 
 class LevelSelectScreen {
     render() {
         return (
             <div class="LevelSelectScreen">
-                <div class="LevelDetails" style={{"background-image": "url(" + LevelDetails[game.lookAtLevel] + ")"}}/>
+                <div class="LevelDetails" style={{"background-image": "url(" + Levels[game.lookAtLevel].details + ")"}}/>
                 <div class="SelectableLevelTab" id="Level1" onClick={this.onClickTab(1)}></div>
                 <div class="SelectableLevelTab" id="Level2" onClick={this.onClickTab(2)}></div>
                 <div class="SelectableLevelTab" id="Level3" onClick={this.onClickTab(3)}></div>
@@ -74,7 +68,7 @@ class LevelSelectScreen {
     }
     onClickButton() {
         return (event) => {
-            game.screen = "GameScreen"
+            Navigation.go("GameScreen")
             game.level = Deepclone(Levels[game.lookAtLevel])
         }
     }
@@ -89,16 +83,14 @@ class GameScreen {
                 <div class="Background"/>
                 <div class="Grandma" hasWon={game.level.hasWon}/>
                 <div class="Table"/>
-                <div class="CookbookSpace">
-                    {game.level.instructions.map((instruction) => <p>{instruction}</p>)}
-                </div>
+                <img class="Cookbook" src={game.level.recipe}/>
                 <div class="CookingSpace">
                     {Object.keys(game.level.items).map((itemId) => <Item item={itemId}/>)}
                     <SelectedItem/>
                 </div>
                 <div class="YouWinModal" hasWon={game.level.hasWon == true}>
                     <h1>Recipe Complete!!</h1>
-                    <div class="ContinueButton" onClick={() => game.screen = "LevelSelectScreen"}>
+                    <div class="ContinueButton" onClick={() => Navigation.go("LevelSelectScreen")}>
                         Click here to continue.
                     </div>
                 </div>
@@ -108,8 +100,11 @@ class GameScreen {
                     game.level.isPaused = false
                 }}>
                     <div class="PauseModalBox" onClick={(event) => event.stopPropagation()}/>
-                    <div class="BackButton" onClick={(event) => game.screen = "LevelSelectScreen"}/>
-                    <div class="RestartButton" onClick={(event) => game.level = Deepclone(Levels[game.level.number])}/>
+                    <div class="BackButton" onClick={(event) => Navigation.go("LevelSelectScreen")}/>
+                    <div class="RestartButton" onClick={(event) => {
+                        game.level = Deepclone(Levels[game.level.number])
+                        Navigation.go("GameScreen")
+                    }}/>
                 </div>
             </div>
         )
@@ -248,6 +243,8 @@ const Levels = {
             "Pan": {"isLocation": true},
             "CuttingBoard": {"isLocation": true, "isSelectable": false},
         },
+        "details":  require("../images/level1-select.png"),
+        "recipe": require("../images/recipe-01.png"),
         "instructions": [
             "Chop the tomatoes, green peppers, onion.",
             "Put the pan on the stove",
@@ -263,6 +260,7 @@ const Levels = {
                 game.level.items["Pan"].position = "Stove"
                 game.level.items["Pan"].isSelectable = false
                 game.level.selectedItem = undefined
+                play(audios["stove"], {"volume": 0.5})
                 return
             }
             if(game.level.selectedItem == "Knife"
@@ -270,6 +268,7 @@ const Levels = {
                 Object.values(game.level.items).forEach((item) => {
                     if(item.position == "CuttingBoard"
                     && item.canBeCut == true) {
+                        play(audios["cutting"], {"volume": 0.6, "doNotInterrupt": true})
                         item.cuts = item.cuts || 0
                         item.cuts += 1
                         if(item.cuts >= item.maxcuts) {
@@ -311,6 +310,7 @@ const Levels = {
                 if(game.level.items["Oil"].status == "StirFry") {
                     game.level.items["Oil"].status = "Shakshoka"
                     game.level.items["Egg"].isGone = true
+                    play(audios["eggs-cracking"], {"volume": 0.5})
                     game.level.selectedItem = undefined
                 }
                 return
@@ -331,6 +331,9 @@ const Levels = {
             && game.level.items[game.level.selectedItem]?.canBePotted == true) {
                 game.level.items[game.level.selectedItem].position = "Pan"
                 game.level.items[game.level.selectedItem].isSelectable = false
+                if(game.level.selectedItem != "Oil") {
+                    play(audios["frying"], {"volume": 0.5, "loop": true, "doNotInterrupt": true})
+                }
                 game.level.selectedItem = undefined
                 return
             }
@@ -342,6 +345,8 @@ const Levels = {
     "2": {
         "number": 2,
         "name": "Molokheya",
+        "details":  require("../images/level2-select.png"),
+        "recipe": require("../images/recipe-02.png"),
         "instructions": [
             "1. Put the pot on the stove.",
             "1. Add the chicken stock",
@@ -372,6 +377,7 @@ const Levels = {
                 game.level.items["Pot"].position = "Stove"
                 game.level.items["Pot"].isSelectable = false
                 game.level.selectedItem = undefined
+                play(audios["stove"], {"volume": 0.5})
                 return
             }
             if(game.level.selectedItem == "ChickenStock"
@@ -379,6 +385,7 @@ const Levels = {
                 game.level.items["ChickenStock"].isGone = true
                 game.level.items["Pot"].status = "Soup"
                 game.level.selectedItem = undefined
+                play(audios["boiling-water"], {"volume": 0.5})
                 return
             }
             if(game.level.selectedItem == "Molokheya"
@@ -392,6 +399,7 @@ const Levels = {
             && game.level.items["Molokheya"].position == "CuttingBoard") {
                 game.level.items["Molokheya"].cuts = game.level.items["Molokheya"].cuts || 0
                 game.level.items["Molokheya"].cuts += 1
+                play(audios["molkeya-cutting"], {"volume": 0.6, "doNotInterrupt": true})
                 if(game.level.items["Molokheya"].cuts >= 2) {
                     game.level.items["Molokheya"].cuts = 2
                     game.level.items["Molokheya"].hasBeenChopped = true
@@ -404,6 +412,7 @@ const Levels = {
             && game.level.items["Molokheya"].cuts == 2) {
                 game.level.items["Molokheya"].position = "Pot"
                 game.level.selectedItem = undefined
+                // play(audios["splash"], {"volume": 0.5})
                 return
             }
 
@@ -412,6 +421,7 @@ const Levels = {
             && game.level.selectedItem == "Takleya") {
                 game.level.items["Takleya"].position = "Pot"
                 game.level.selectedItem = undefined
+                play(audios["woman-gasping"], {"volume": 0.5})
                 return
             }
 
@@ -423,6 +433,7 @@ const Levels = {
                 game.level.items["Takleya"].isGone = true
                 game.level.items["Molokheya"].isGone = true
                 game.level.items["Pot"].status = "Finished"
+                // play(audios["stir"], {"volume": 0.5})
             }
 
             if(clickedItem == "Pot"
@@ -444,6 +455,8 @@ const Levels = {
     "3": {
         "number": 3,
         "name": "Mashy",
+        "details":  require("../images/level3-select.png"),
+        "recipe": require("../images/recipe-03.png"),
         "instructions": [
             "Make the stuffing by mixing the veggies then the tomato paste into the rice.",
             "Make the rolls by placing the stuffing on the vine leaf and wrapping them.",
@@ -474,6 +487,7 @@ const Levels = {
                 game.level.items["Pot"].position = "Stove"
                 game.level.items["Pot"].isSelectable = false
                 game.level.selectedItem = undefined
+                play(audios["stove"], {"volume": 0.5})
                 return
             }
             console.log(clickedItem, selectedItem)
@@ -512,6 +526,7 @@ const Levels = {
                 game.level.items["LeafPlate"].isGone = true
                 game.level.items["Pot"].status = "Wraps"
                 game.level.selectedItem = undefined
+                play(audios["boiling-food"], {"volume": 0.5})
                 return
             }
             if(selectedItem == "ChickenStock"
@@ -533,10 +548,51 @@ const Levels = {
     }
 }
 
+const audios = {
+    "music1": new Audio(require("../audio/music1.mp3")),
+    "music2": new Audio(require("../audio/music2.mp3")),
+    "stove": new Audio(require("../audio/stove.mp3")),
+    "oil": new Audio(require("../audio/oil.mp3")),
+    "frying": new Audio(require("../audio/frying.mp3")),
+    "eggs-cracking": new Audio(require("../audio/eggs-cracking.mp3")),
+    "cutting": new Audio(require("../audio/cutting.mp3")),
+    "molkeya-cutting":  new Audio(require("../audio/molkeya-cutting.mp3")),
+    "boiling-water":  new Audio(require("../audio/boiling-water.mp3")),
+    "boiling-food":  new Audio(require("../audio/boiling-food.mp3")),
+    "woman-gasping":  new Audio(require("../audio/woman-gasping.mp3")),
+}
+function play(audio, {loop = false, volume = 1, doNotInterrupt = false} = {}) {
+    if(doNotInterrupt == true
+    && audio.paused == false) {
+        return
+    }
+    audio.pause()
+    audio.loop = loop
+    audio.volume = volume
+    audio.currentTime = 0
+    audio.play()
+}
+
+const Navigation = new class {
+    go(screen) {
+        Object.values(audios).forEach((audio) => {
+            audio.pause()
+            audio.currentTime = 0
+        })
+        if(screen == "TitleScreen" || screen == "GameScreen") {
+            play(audios["music1"], {"volume": 0.2, "loop": true})
+        }
+        if(screen == "LevelSelectScreen") {
+            play(audios["music2"], {"volume": 0.2, "loop": true})
+        }
+        game.screen = screen
+    }
+}
+
 window.game = {
-    "screen": "GameScreen",
+    // "screen": "GameScreen",
     // "screen": "LevelSelectScreen",
-    // "screen": "TitleScreen",
+    "screen": "TitleScreen",
     "lookAtLevel": 1,
     "level": Deepclone(Levels[3])
 }

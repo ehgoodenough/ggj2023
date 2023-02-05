@@ -120,6 +120,8 @@
     font-family: @fonts;
     cursor: pointer;
 
+    background-color: #805434;
+
     .Table {
         left: 0em;
         right: 0em;
@@ -286,23 +288,19 @@
         }
     }
 
-    .CookbookSpace {
+    .Cookbook {
         right: 1em;
         top: 1em;
-        z-index: 4;
-        width: 45.13em - 37.77em;
-        height: 10.75em - 0.03em;
-
-        background-size: contain;
-        background-image: url("../images/recipe-note.png");
-
-        padding: 0.7em 0.33em;
+        z-index: 100;
+        height: 10em;
         position: absolute;
-        text-align: right;
 
-        p {
-            font-size: 0.66em;
-            margin-bottom: 0.7em / @golden-ratio;
+        transition-property: height;
+        transition-duration: 0.25s;
+
+        &:hover {
+            height: 15em;
+            transition-duration: 0.1s;
         }
     }
 
@@ -366,6 +364,8 @@
                 right: 0em;
                 top: -0.5em;
                 text-align: center;
+
+                display: none;
             }
         }
 
